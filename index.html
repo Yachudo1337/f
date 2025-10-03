@@ -1,346 +1,96 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>helo ethernet</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+/* ... (Все предыдущие стили для фона, заголовка, позиционирования и проигрывателя остаются прежними) ... */
 
-    <style>
-        /* ======================================= */
-        /* 1. ГЛОБАЛЬНЫЕ СТИЛИ И ФОН (GIF)        */
-        /* ======================================= */
+/* ======================================= */
+/* 2. АНИМАЦИИ (KEYFRAMES)                 */
+/* ======================================= */
 
-        body {
-            margin: 0; 
-            font-family: Arial, sans-serif;
-            overflow: hidden; 
-        }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-        #background-gif {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-            z-index: -1; 
-        }
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(150%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
-        /* ======================================= */
-        /* 2. АНИМАЦИИ (KEYFRAMES)                 */
-        /* ======================================= */
+@keyframes slideInFromBottomLeft {
+    from {
+        transform: translate(-100%, 100%); 
+        opacity: 0;
+    }
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+/* ======================================= */
+/* 3. ОСНОВНОЙ КОНТЕНТ И ПОЗИЦИОНИРОВАНИЕ  */
+/* ======================================= */
 
-        @keyframes slideInFromRight {
-            from {
-                transform: translateX(150%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+body {
+    margin: 0; 
+    font-family: Arial, sans-serif;
+    overflow: hidden; 
+}
 
-        @keyframes slideInFromBottomLeft {
-            from {
-                transform: translate(-100%, 100%); 
-                opacity: 0;
-            }
-            to {
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-        }
+#background-gif {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; 
+    z-index: -1; 
+}
 
-        /* ======================================= */
-        /* 3. ПОЗИЦИОНИРОВАНИЕ ОСНОВНОГО КОНТЕНТА  */
-        /* ======================================= */
+.content {
+    width: 100%; height: 100vh;
+    background-color: transparent; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-start; 
+    padding: 30px; 
+    box-sizing: border-box; 
+    position: relative; 
+    z-index: 1; 
+}
 
-        .content {
-            width: 100%;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.1); /* Слой затемнения */
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: flex-start; 
-            padding: 30px; 
-            box-sizing: border-box; 
-            position: relative; 
-            z-index: 1; 
-        }
-        
-        /* --- Стили для надписи "helo w0rd" --- */
-        .main-title {
-            color: white; 
-            font-size: 60px; 
-            font-style: italic; 
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); 
-            margin-bottom: 50px; 
-            margin-top: 50px; 
-            text-align: center; 
-            animation: fadeIn 2s ease-in-out forwards; 
-            opacity: 0; 
-        }
+.main-title {
+    color: white; 
+    font-size: 60px; 
+    font-style: italic; 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+    margin-bottom: 50px; 
+    margin-top: 50px; 
+    text-align: center; 
+    animation: fadeIn 2s ease-in-out forwards; 
+    opacity: 0; 
+}
 
-        /* --- Контейнер для кнопок (справа) --- */
-        .button-container {
-            display: flex;
-            flex-direction: column; 
-            gap: 20px; 
-            padding: 25px; 
-            background-color: rgba(0, 0, 0, 0.6); 
-            border-radius: 10px;
-            position: absolute;
-            right: 30px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-        }
-        
-        /* ======================================= */
-        /* 4. СТИЛИ НОВОГО ЦЕНТРАЛЬНОГО ТЕКСТА     */
-        /* ======================================= */
+.button-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+    padding: 25px; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 10px;
+    position: absolute;
+    right: 30px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+}
 
-        .secret-text-container {
-            /* Позиционируем контейнер точно по центру */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5; /* Поверх фона, но под заголовком "helo w0rd" */
-            
-            width: 80%;
-            max-width: 900px; /* Ограничиваем ширину */
-            padding: 30px 40px;
-            
-            /* Эффект размытия и полупрозрачный фон */
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-            
-            color: #d0d0d0;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
+/* ======================================= */
+/* 4. СТИЛИЗАЦИЯ И АНИМАЦИЯ КНОПОК        */
+/* ======================================= */
 
-        /* Заголовки текста (C23H30N2O4 и YA_CHYDO 1000-7) */
-        .text-header-line {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Центрирование C23H30N2O4 */
-        .text-header-line span:first-child {
-            flex-grow: 1;
-            text-align: center;
-            /* Сдвиг влево, чтобы формула была именно по центру */
-            transform: translateX(50px); 
-        }
-        
-        /* Разделительная линия */
-        .text-separator {
-            color: #66ff66; /* Яркий зеленый */
-            font-size: 0.9em;
-            opacity: 0.8;
-            margin: 30px 0;
-            overflow-wrap: break-word;
-            text-align: center;
-        }
-        
-        /* Стиль для диалогов (отступы и курсив) */
-        .dialog-line {
-            margin-top: 15px;
-            font-style: italic;
-        }
-
-        /* ======================================= */
-        /* 5. СТИЛИ КНОПОК И ПРОИГРЫВАТЕЛЯ (БЕЗ ИЗМЕНЕНИЙ) */
-        /* ======================================= */
-        
-        .button {
-            display: block; 
-            padding: 20px 40px; 
-            font-size: 20px; 
-            min-width: 180px; 
-            text-align: center; 
-            background-color: rgba(255, 255, 255, 0.2); 
-            border: 2px solid white; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 10px; 
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); 
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-        }
-
-        .animated-item {
-            animation: slideInFromRight 0.8s ease-out forwards;
-            opacity: 0; 
-        }
-
-        .item-1 { animation-delay: 0.2s; }
-        .item-2 { animation-delay: 0.4s; }
-        .item-3 { animation-delay: 0.6s; }
-        .item-4 { animation-delay: 0.8s; }
-
-        .button:hover {
-            background-color: rgba(255, 255, 255, 0.4); 
-            transform: translateX(-5px); 
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); 
-        }
-
-        .button:active {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateX(0); 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        #music-player-btn {
-            position: fixed;
-            left: 30px; 
-            bottom: 30px;
-            z-index: 10;
-            
-            padding: 15px; 
-            width: 50px; 
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.1); 
-            border: 2px solid white; 
-            color: white; 
-            border-radius: 8px; 
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
-            animation-delay: 1.2s; 
-        }
-
-        #music-player-btn i {
-            font-size: 20px;
-        }
-
-        #music-player-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3); 
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-            transform: scale(1.1);
-            transition: all 0.2s;
-        }
-
-        #music-player-btn.playing {
-            background-color: #2ecc71; 
-            border-color: #2ecc71;
-            transform: none; 
-        }
-    </style>
-</head>
-<body>
-
-    <img src="https://i.pinimg.com/originals/2a/3b/cb/2a3bcbcbe4e14c1cf24ef307c10c1fb9.gif" alt="Фоновый GIF" id="background-gif">
-
-    <div class="content">
-        
-        <h1 class="main-title">helo w0rd</h1>
-        
-        <div class="secret-text-container">
-            
-            <div class="text-header-line">
-                <span>C23H30N2O4</span>
-                <span>YA_CHYDO 1000-7</span>
-            </div>
-            
-            <p>
-                Пойми меня. Прими конструктивное решение. Ты нашёл это, как поступишь ты?
-            </p>
-            
-            <p class="dialog-line">
-                — Знаете ли... Я бы не стал обращаться с этим к кому ни попадя. Ведь 
-                человек, написавший это, опасен. И этот тихий и приличный с виду псих 
-                может вдруг сорваться и он начнет метаться из офиса в офис, держа 
-                полуавтоматический карабин в руках и будет выпускать обойму за обоймой в
-                своих коллег и сотрудников. Возможно, вы знакомы с ним годы, и он 
-                совсем, совсем рядом с вами
-            </p>
-
-            <div class="text-separator">
-                ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-            </div>
-
-            <p>
-                Очень прошу, пропишите мне что-нибудь. Синий, красный туинал, малиновый, как помада, секанал.
-            </p>
-            
-            <p class="dialog-line">
-                — Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться.
-            </p>
-            
-            <p style="text-align: right;" class="dialog-line">
-                — Эй, послушайте, я же мучаюсь.
-            </p>
-            
-            <p style="text-align: right;" class="dialog-line">
-                — Вы мучаетесь?
-            </p>
-        </div>
-        
-        <div class="button-container">
-            <a href="inf-adptr.html" class="button animated-item item-1">inf adptr</a>
-            <a href="phto-chrch.html" class="button animated-item item-2">phto chrch</a>
-            <a href="bludy-msic.html" class="button animated-item item-3">bludy msic</a>
-            <a href="silnt-flms.html" class="button animated-item item-4">silnt flms</a>
-        </div>
-    </div>
-    
-    <div id="music-player-btn">
-        <i class="fas fa-play" id="player-icon"></i>
-    </div>
-
-    <audio id="my-audio" src="your-song.mp3" loop></audio>
-
-    <script>
-        // Код JavaScript для управления аудио
-        const playerBtn = document.getElementById('music-player-btn');
-        const playerIcon = document.getElementById('player-icon');
-        const audio = document.getElementById('my-audio');
-        let isPlaying = false;
-
-        playerBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                playerIcon.classList.remove('fa-pause');
-                playerIcon.classList.add('fa-play');
-                playerBtn.classList.remove('playing');
-                isPlaying = false;
-            } else {
-                audio.play().catch(error => {
-                    console.log('Воспроизведение заблокировано браузером. Убедитесь, что файл "your-song.mp3" существует.');
-                });
-                playerIcon.classList.remove('fa-play');
-                playerIcon.classList.add('fa-pause');
-                playerBtn.classList.add('playing');
-                isPlaying = true;
-            }
-        });
-    </script>
-    
-</body>
-</html>
+.button {
+    display: block; 
+    padding: 20px 40px;
