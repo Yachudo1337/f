@@ -47,19 +47,20 @@
     </div>
     
     <div id="music-player-container">
-        <div id="music-player-btn">
-            <i class="fas fa-play" id="player-icon"></i>
-        </div>
+        <button id="prev-track-btn" class="track-control-btn"><i class="fas fa-backward"></i></button>
+        <button id="music-player-btn"><i class="fas fa-play" id="player-icon"></i></button>
+        <button id="next-track-btn" class="track-control-btn"><i class="fas fa-forward"></i></button>
         <span id="track-name"></span>
     </div>
 
-    <audio id="my-audio" src="your-song.mp3" loop></audio>
+    <audio id="my-audio" src="" loop></audio>
 
     <script>
+        // СПИСОК ВОСПРОИЗВЕДЕНИЯ
         const playlist = [
-            'your-song.mp3', // Оригинальный файл
-            'track2.mp3',  
-            'track3.mp3'   
+            'Fuckman.mp3', 
+            'lovely.mp3',  
+            'Безумное зло.mp3'
         ];
         let currentTrackIndex = 0;
         let isPlaying = false;
@@ -68,11 +69,18 @@
         const playerIcon = document.getElementById('player-icon');
         const audio = document.getElementById('my-audio');
         const trackNameElement = document.getElementById('track-name');
+        const prevBtn = document.getElementById('prev-track-btn');
+        const nextBtn = document.getElementById('next-track-btn');
+
+        function formatTrackName(fileName) {
+            // Удаляем расширение и заменяем %20 (пробелы)
+            let name = fileName.replace(/\.mp3/i, '');
+            // Если есть кириллица, браузер может закодировать, но здесь оставим как есть.
+            return name;
+        }
 
         function updateTrackName() {
-            // Отображаем имя файла без расширения
-            const name = playlist[currentTrackIndex].replace(/\.mp3/i, '');
-            trackNameElement.textContent = name;
+            trackNameElement.textContent = formatTrackName(playlist[currentTrackIndex]);
         }
 
         function loadTrack(index) {
@@ -81,43 +89,60 @@
             updateTrackName();
         }
 
-        function togglePlay() {
-            if (isPlaying) {
-                audio.pause();
-                playerIcon.classList.remove('fa-pause');
-                playerIcon.classList.add('fa-play');
-                playerBtn.classList.remove('playing');
-                isPlaying = false;
-            } else {
-                // Если песня закончилась, загружаем ее снова (или следующую, если нужно)
-                if (audio.ended || audio.src === "") {
-                    loadTrack(currentTrackIndex); 
-                }
-                
-                audio.play().catch(error => {
-                    console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
-                    alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${playlist[currentTrackIndex]}" не найден или заблокирован браузером.`);
-                });
+        function playAudio() {
+            audio.play().then(() => {
                 playerIcon.classList.remove('fa-play');
                 playerIcon.classList.add('fa-pause');
                 playerBtn.classList.add('playing');
                 isPlaying = true;
+            }).catch(error => {
+                console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
+                alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${playlist[currentTrackIndex]}" не найден или заблокирован браузером. (Проверьте, что кириллица в названии файла корректно обработана сервером)`);
+                isPlaying = false;
+                playerBtn.classList.remove('playing');
+                playerIcon.classList.remove('fa-pause');
+                playerIcon.classList.add('fa-play');
+            });
+        }
+
+        function pauseAudio() {
+            audio.pause();
+            playerIcon.classList.remove('fa-pause');
+            playerIcon.classList.add('fa-play');
+            playerBtn.classList.remove('playing');
+            isPlaying = false;
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
             }
         }
-        
-        playerBtn.addEventListener('click', togglePlay);
-        
-        // Автоматическая загрузка первого трека при инициализации
-        loadTrack(currentTrackIndex); 
 
-        // Дополнительно: автоматически переключаться на следующую песню
-        audio.addEventListener('ended', () => {
-             // Простой переход на следующую песню в списке
-             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-             loadTrack(currentTrackIndex);
-             audio.play();
-        });
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playAudio();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playAudio();
+        }
         
+        // Автоматический переход к следующей песне, когда текущая закончилась
+        audio.addEventListener('ended', nextTrack);
+
+        // Обработчики событий
+        playerBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+
+        // Загрузка первого трека при старте
+        loadTrack(currentTrackIndex);
     </script>
     
 </body>
