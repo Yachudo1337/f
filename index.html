@@ -31,7 +31,7 @@
                 
                 <p class="fade-in-line item-4">Очень прошу, пропишите мне что-нибудь. Синий, красный тунал, малиновый, как помада, секанал.</p>
                 
-                <p class="fade-in-line item-5">— Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться.</p>
+                <p class="answer-right fade-in-line item-5">— Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться.</p>
                 
                 <p class="answer-right fade-in-line item-6">— Эй, послушайте, я же мучаюсь.</p>
                 
@@ -46,6 +46,8 @@
         </div>
     </div>
     
+    <video id="lain-video" src="lain.mp4" loop muted autoplay playsinline></video>
+
     <div id="music-player-container">
         <button id="prev-track-btn" class="track-control-btn"><i class="fas fa-backward"></i></button>
         <button id="music-player-btn"><i class="fas fa-play" id="player-icon"></i></button>
@@ -56,7 +58,7 @@
     <audio id="my-audio" src="" loop></audio>
 
     <script>
-        // СПИСОК ВОСПРОИЗВЕДЕНИЯ
+        // === ЛОГИКА ПЛЕЙЛИСТА ===
         const playlist = [
             'Fuckman.mp3', 
             'lovely.mp3',  
@@ -71,11 +73,20 @@
         const trackNameElement = document.getElementById('track-name');
         const prevBtn = document.getElementById('prev-track-btn');
         const nextBtn = document.getElementById('next-track-btn');
+        
+        // Автоматическое воспроизведение видео (может быть заблокировано браузером, если без muted)
+        const lainVideo = document.getElementById('lain-video');
+        lainVideo.play().catch(error => {
+            console.error('Не удалось воспроизвести видео автоматически:', error);
+            // Можно добавить кнопку "Play Video" если автовоспроизведение не сработало
+        });
+
 
         function formatTrackName(fileName) {
-            // Удаляем расширение и заменяем %20 (пробелы)
             let name = fileName.replace(/\.mp3/i, '');
-            // Если есть кириллица, браузер может закодировать, но здесь оставим как есть.
+            try {
+                name = decodeURIComponent(name);
+            } catch (e) {}
             return name;
         }
 
@@ -97,7 +108,7 @@
                 isPlaying = true;
             }).catch(error => {
                 console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
-                alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${playlist[currentTrackIndex]}" не найден или заблокирован браузером. (Проверьте, что кириллица в названии файла корректно обработана сервером)`);
+                alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${playlist[currentTrackIndex]}" не найден.`);
                 isPlaying = false;
                 playerBtn.classList.remove('playing');
                 playerIcon.classList.remove('fa-pause');
@@ -133,7 +144,7 @@
             playAudio();
         }
         
-        // Автоматический переход к следующей песне, когда текущая закончилась
+        // Автоматический переход
         audio.addEventListener('ended', nextTrack);
 
         // Обработчики событий
