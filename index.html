@@ -25,7 +25,7 @@
             <div class="text-block">
                 <p class="fade-in-line item-1">Пойми меня. Прими конструктивное решение. Ты нашёл это, как поступишь ты?</p>
                 
-                <p class="fade-in-line item-2">— Знаете ли... Я бы не стал обращаться с этим к кому ни попадая. Ведь человек, написавший это, опасен. И этот тихий и приличный с виду псих может вдруг сорваться и он начнет метаться из офиса в офис, держа полуавтоматический карабин в руках и будет выпускать обойму за обоймой в своих коллег и сотрудников. Возможно, вы знакомы с ним годы, и он совсем, совсем рядом с вами</p>
+                <p class="fade-in-line item-2">— Знаете ли... Я бы не стал обращаться с этим к кому ни попадя. Ведь человек, написавший это, опасен. И этот тихий и приличный с виду псих может вдруг сорваться и он начнет метаться из офиса в офис, держа полуавтоматический карабин в руках и будет выпускать обойму за обоймой в своих коллег и сотрудников. Возможно, вы знакомы с ним годы, и он совсем, совсем рядом с вами</p>
                 
                 <div class="loading-bar fade-in-line item-3"></div>
                 
@@ -47,37 +47,92 @@
         </div>
     </div>
     
-    <div id="music-player-btn">
-        <i class="fas fa-play" id="player-icon"></i>
+    <div id="music-player-full-container">
+        <button id="prev-track-btn" class="track-control-btn"><i class="fas fa-backward"></i></button>
+        <button id="music-player-btn"><i class="fas fa-play" id="player-icon"></i></button>
+        <button id="next-track-btn" class="track-control-btn"><i class="fas fa-forward"></i></button>
     </div>
 
-    <audio id="my-audio" src="Fuckman.mp3" loop></audio>
+    <audio id="my-audio" src="" loop></audio>
 
     <script>
-        // Код JavaScript для управления аудио
+        // СПИСОК ВОСПРОИЗВЕДЕНИЯ
+        const playlist = [
+            'Fuckman.mp3', // Ваш текущий файл (файл должен существовать в той же папке)
+            'track2.mp3',  // Добавьте свои названия файлов!
+            'track3.mp3'   // Добавьте свои названия файлов!
+        ];
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        const playerFullContainer = document.getElementById('music-player-full-container');
         const playerBtn = document.getElementById('music-player-btn');
         const playerIcon = document.getElementById('player-icon');
         const audio = document.getElementById('my-audio');
-        let isPlaying = false;
+        const prevBtn = document.getElementById('prev-track-btn');
+        const nextBtn = document.getElementById('next-track-btn');
 
-        playerBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                playerIcon.classList.remove('fa-pause');
-                playerIcon.classList.add('fa-play');
-                playerBtn.classList.remove('playing');
-                isPlaying = false;
-            } else {
-                audio.play().catch(error => {
-                    console.error('Воспроизведение заблокировано или файл "Fuckman.mp3" не найден.', error);
-                    alert('Ошибка: Не удалось воспроизвести музыку. Проверьте путь к файлу "Fuckman.mp3"');
-                });
+        // Инициализация первой песни
+        function loadTrack(index) {
+            audio.src = playlist[index];
+            audio.load();
+        }
+
+        function playAudio() {
+            audio.play().then(() => {
                 playerIcon.classList.remove('fa-play');
                 playerIcon.classList.add('fa-pause');
                 playerBtn.classList.add('playing');
                 isPlaying = true;
+            }).catch(error => {
+                console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
+                alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${audio.src}" не найден или заблокирован браузером.`);
+                isPlaying = false;
+                playerBtn.classList.remove('playing');
+                playerIcon.classList.remove('fa-pause');
+                playerIcon.classList.add('fa-play');
+            });
+        }
+
+        function pauseAudio() {
+            audio.pause();
+            playerIcon.classList.remove('fa-pause');
+            playerIcon.classList.add('fa-play');
+            playerBtn.classList.remove('playing');
+            isPlaying = false;
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
             }
-        });
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playAudio();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playAudio();
+        }
+
+        // Автоматический переход к следующей песне, когда текущая закончилась
+        audio.addEventListener('ended', nextTrack);
+
+        // Обработчики событий
+        playerBtn.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+
+        // Загрузка первого трека при старте
+        loadTrack(currentTrackIndex);
+
     </script>
     
 </body>
