@@ -53,7 +53,7 @@ body {
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    /* Вертикальное центрирование */
+    /* Центрирование по вертикали */
     justify-content: center; 
     padding: 30px; 
     box-sizing: border-box; 
@@ -66,9 +66,8 @@ body {
     font-size: 60px; 
     font-style: italic; 
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
-    /* Сдвигаем вверх, как на скриншоте */
     margin-bottom: 20px; 
-    margin-top: -100px; 
+    margin-top: -100px; /* Сдвигаем вверх */
     text-align: center; 
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
@@ -114,7 +113,6 @@ body {
     opacity: 0; 
 }
 
-/* Задержка для ПОСЛЕДОВАТЕЛЬНОГО выезда 4-х кнопок */
 .item-1 { animation-delay: 0.2s; }
 .item-2 { animation-delay: 0.4s; }
 .item-3 { animation-delay: 0.6s; }
@@ -137,7 +135,7 @@ body {
 /* 5. СТИЛИЗАЦИЯ МУЗЫКАЛЬНОГО ПРОИГРЫВАТЕЛЯ */
 /* ======================================= */
 
-/* Новый контейнер для кнопки и названия */
+/* Контейнер плеера (включает все кнопки и название) */
 #music-player-container {
     position: fixed;
     left: 30px; 
@@ -146,14 +144,44 @@ body {
     
     display: flex;
     align-items: center;
-    gap: 15px; /* Промежуток между кнопкой и текстом */
+    gap: 10px; /* Промежуток между элементами плеера */
     
     /* Анимация выдвижения снизу слева */
     animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     animation-delay: 1.2s; 
-    opacity: 0; /* Анимация делает его видимым */
+    opacity: 0; 
+    
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2); /* Небольшой фон для всего плеера */
+    border-radius: 10px;
 }
 
+/* Стили для кнопок переключения (Prev/Next) */
+.track-control-btn {
+    padding: 8px; 
+    width: 30px; 
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    border: 1px solid white; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.track-control-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    /* Убрана анимация transform: scale */
+}
+
+
+/* Стили для кнопки Play/Pause */
 #music-player-btn {
     padding: 15px; 
     width: 50px; 
@@ -176,9 +204,9 @@ body {
 }
 
 #music-player-btn:hover {
-    /* Убрано transform: scale(1.1); */
     background-color: rgba(255, 255, 255, 0.2); 
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    /* Убрана анимация transform: scale(1.1); */
 }
 
 #music-player-btn.playing {
@@ -192,9 +220,6 @@ body {
     font-size: 16px;
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    /* Анимация названия, чтобы появилось вместе с кнопкой */
-    animation: fadeIn 0.8s ease-in-out forwards; 
-    animation-delay: 1.5s; 
 }
 
 
@@ -210,7 +235,7 @@ body {
     padding: 30px;
     border-radius: 5px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-    margin-top: 0; /* Корректируем отступы для лучшего центрирования */
+    margin-top: 0; 
     margin-bottom: 0;
     box-sizing: border-box;
 }
@@ -222,18 +247,18 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
     padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Добавляем разделитель для красоты */
 }
 
 .code-left {
-    /* !!! ИСПРАВЛЕНИЕ НАЛОЖЕНИЯ !!! */
+    /* ИСПРАВЛЕНИЕ: Гарантируем, что текст слева */
     text-align: left; 
-    flex-grow: 0; /* Убираем растяжение */
-    width: auto;
+    flex-grow: 0; 
 }
 
 .code-right {
+    /* ИСПРАВЛЕНИЕ: Гарантируем, что текст справа */
     text-align: right;
-    width: auto; /* Убираем фиксированную ширину, чтобы избежать проблем */
 }
 
 .text-block p {
@@ -265,6 +290,7 @@ body {
     animation: fadeIn 0.8s ease-in-out forwards; 
 }
 
+/* Устанавливаем задержки */
 .fade-in-line.item-1 { animation-delay: 1.5s; }
 .fade-in-line.item-2 { animation-delay: 2.2s; } 
 .fade-in-line.item-3 { animation-delay: 4.0s; }
