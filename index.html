@@ -25,7 +25,7 @@
             <div class="text-block">
                 <p class="fade-in-line item-1">Пойми меня. Прими конструктивное решение. Ты нашёл это, как поступишь ты?</p>
                 
-                <p class="fade-in-line item-2">— Знаете ли... Я бы не стал обращаться с этим к кому ни попадя. Ведь человек, написавший это, опасен. И этот тихий и приличный с виду псих может вдруг сорваться и он начнет метаться из офиса в офис, держа полуавтоматический карабин в руках и будет выпускать обойму за обоймой в своих коллег и сотрудников. Возможно, вы знакомы с ним годы, и он совсем, совсем рядом с вами</p>
+                <p class="fade-in-line item-2">— Знаете ли... Я бы не стал обращаться с этим к кому ни попадая. Ведь человек, написавший это, опасен. И этот тихий и приличный с виду псих может вдруг сорваться и он начнет метаться из офиса в офис, держа полуавтоматический карабин в руках и будет выпускать обойму за обоймой в своих коллег и сотрудников. Возможно, вы знакомы с ним годы, и он совсем, совсем рядом с вами</p>
                 
                 <div class="loading-bar fade-in-line item-3"></div>
                 
@@ -37,8 +37,7 @@
                 
                 <p class="answer-right fade-in-line item-7">— Вы мучаетесь?</p>
             </div>
-        </div>
-
+            </div>
         <div class="button-container">
             <a href="inf-adptr.html" class="button animated-item item-1">inf adptr</a>
             <a href="phto-chrch.html" class="button animated-item item-2">phto chrch</a>
@@ -47,92 +46,78 @@
         </div>
     </div>
     
-    <div id="music-player-full-container">
-        <button id="prev-track-btn" class="track-control-btn"><i class="fas fa-backward"></i></button>
-        <button id="music-player-btn"><i class="fas fa-play" id="player-icon"></i></button>
-        <button id="next-track-btn" class="track-control-btn"><i class="fas fa-forward"></i></button>
+    <div id="music-player-container">
+        <div id="music-player-btn">
+            <i class="fas fa-play" id="player-icon"></i>
+        </div>
+        <span id="track-name"></span>
     </div>
 
-    <audio id="my-audio" src="" loop></audio>
+    <audio id="my-audio" src="your-song.mp3" loop></audio>
 
     <script>
-        // СПИСОК ВОСПРОИЗВЕДЕНИЯ
         const playlist = [
-            'Fuckman.mp3', // Ваш текущий файл (файл должен существовать в той же папке)
-            'track2.mp3',  // Добавьте свои названия файлов!
-            'track3.mp3'   // Добавьте свои названия файлов!
+            'your-song.mp3', // Оригинальный файл
+            'track2.mp3',  
+            'track3.mp3'   
         ];
         let currentTrackIndex = 0;
         let isPlaying = false;
-
-        const playerFullContainer = document.getElementById('music-player-full-container');
+        
         const playerBtn = document.getElementById('music-player-btn');
         const playerIcon = document.getElementById('player-icon');
         const audio = document.getElementById('my-audio');
-        const prevBtn = document.getElementById('prev-track-btn');
-        const nextBtn = document.getElementById('next-track-btn');
+        const trackNameElement = document.getElementById('track-name');
 
-        // Инициализация первой песни
+        function updateTrackName() {
+            // Отображаем имя файла без расширения
+            const name = playlist[currentTrackIndex].replace(/\.mp3/i, '');
+            trackNameElement.textContent = name;
+        }
+
         function loadTrack(index) {
             audio.src = playlist[index];
             audio.load();
-        }
-
-        function playAudio() {
-            audio.play().then(() => {
-                playerIcon.classList.remove('fa-play');
-                playerIcon.classList.add('fa-pause');
-                playerBtn.classList.add('playing');
-                isPlaying = true;
-            }).catch(error => {
-                console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
-                alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${audio.src}" не найден или заблокирован браузером.`);
-                isPlaying = false;
-                playerBtn.classList.remove('playing');
-                playerIcon.classList.remove('fa-pause');
-                playerIcon.classList.add('fa-play');
-            });
-        }
-
-        function pauseAudio() {
-            audio.pause();
-            playerIcon.classList.remove('fa-pause');
-            playerIcon.classList.add('fa-play');
-            playerBtn.classList.remove('playing');
-            isPlaying = false;
+            updateTrackName();
         }
 
         function togglePlay() {
             if (isPlaying) {
-                pauseAudio();
+                audio.pause();
+                playerIcon.classList.remove('fa-pause');
+                playerIcon.classList.add('fa-play');
+                playerBtn.classList.remove('playing');
+                isPlaying = false;
             } else {
-                playAudio();
+                // Если песня закончилась, загружаем ее снова (или следующую, если нужно)
+                if (audio.ended || audio.src === "") {
+                    loadTrack(currentTrackIndex); 
+                }
+                
+                audio.play().catch(error => {
+                    console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
+                    alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${playlist[currentTrackIndex]}" не найден или заблокирован браузером.`);
+                });
+                playerIcon.classList.remove('fa-play');
+                playerIcon.classList.add('fa-pause');
+                playerBtn.classList.add('playing');
+                isPlaying = true;
             }
         }
-
-        function nextTrack() {
-            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playAudio();
-        }
-
-        function prevTrack() {
-            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playAudio();
-        }
-
-        // Автоматический переход к следующей песне, когда текущая закончилась
-        audio.addEventListener('ended', nextTrack);
-
-        // Обработчики событий
+        
         playerBtn.addEventListener('click', togglePlay);
-        nextBtn.addEventListener('click', nextTrack);
-        prevBtn.addEventListener('click', prevTrack);
+        
+        // Автоматическая загрузка первого трека при инициализации
+        loadTrack(currentTrackIndex); 
 
-        // Загрузка первого трека при старте
-        loadTrack(currentTrackIndex);
-
+        // Дополнительно: автоматически переключаться на следующую песню
+        audio.addEventListener('ended', () => {
+             // Простой переход на следующую песню в списке
+             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+             loadTrack(currentTrackIndex);
+             audio.play();
+        });
+        
     </script>
     
 </body>
