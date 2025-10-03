@@ -1,5 +1,5 @@
 /* ======================================= */
-/* 2. АНИМАЦИИ (KEYFRAMES)                 */
+/* 1. АНИМАЦИИ (KEYFRAMES)                 */
 /* ======================================= */
 
 @keyframes fadeIn {
@@ -30,13 +30,13 @@
 }
 
 /* ======================================= */
-/* 3. ОСНОВНОЙ КОНТЕНТ И ПОЗИЦИОНИРОВАНИЕ  */
+/* 2. ОСНОВНЫЕ СТИЛИ (MOBILE-FIRST)        */
 /* ======================================= */
 
 body {
     margin: 0; 
     font-family: Arial, sans-serif;
-    overflow: hidden; 
+    overflow-x: hidden; /* Запрещаем горизонтальный скролл */
 }
 
 #background-gif {
@@ -47,15 +47,15 @@ body {
     z-index: -1; 
 }
 
+/* На мобильных: элементы идут сверху вниз и занимают всю ширину */
 .content {
-    width: 100%; height: 100vh;
-    background-color: transparent; 
+    width: 100%; 
+    min-height: 100vh; 
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    /* Центрирование по вертикали */
-    justify-content: center; 
-    padding: 30px; 
+    justify-content: flex-start; /* Начинаем сверху */
+    padding: 20px 10px 100px 10px; /* Отступ снизу для плеера */
     box-sizing: border-box; 
     position: relative; 
     z-index: 1; 
@@ -63,100 +63,112 @@ body {
 
 .main-title {
     color: white; 
-    font-size: 60px; 
+    font-size: 40px; 
     font-style: italic; 
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
     margin-bottom: 20px; 
-    margin-top: -100px; /* Сдвигаем вверх */
+    margin-top: 30px; 
     text-align: center; 
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
 }
 
-.button-container {
+/* Зеленая плашка */
+.info-frame {
+    width: 95%; 
+    max-width: 900px; 
+    background-color: rgba(20, 70, 20, 0.9);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.header-line {
     display: flex;
-    flex-direction: column; 
-    gap: 20px; 
-    padding: 25px; 
+    justify-content: space-between; 
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.code-left, .code-right {
+    white-space: nowrap; /* Важно: предотвращает перенос строки */
+}
+
+.text-block p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+/* Контейнер кнопок: статический на мобильных */
+.button-container {
+    position: static; 
+    transform: none; 
+    width: 95%; 
+    gap: 10px; 
+    padding: 15px; 
     background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 10px;
-    position: absolute;
-    right: 30px; 
-    top: 50%; 
-    transform: translateY(-50%); 
-    z-index: 2; 
 }
-
-/* ======================================= */
-/* 4. СТИЛИЗАЦИЯ И АНИМАЦИЯ КНОПОК        */
-/* ======================================= */
 
 .button {
-    display: block; 
-    padding: 20px 40px; 
-    font-size: 20px; 
-    min-width: 180px; 
-    text-align: center; 
-    background-color: rgba(255, 255, 255, 0.2); 
-    border: 2px solid white; 
-    color: white; 
-    text-decoration: none; 
-    border-radius: 10px; 
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); 
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    padding: 15px 20px; 
+    font-size: 16px; 
+    min-width: 100%; 
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
-
-.animated-item {
-    animation: slideInFromRight 0.8s ease-out forwards;
-    opacity: 0; 
-}
-
-.item-1 { animation-delay: 0.2s; }
-.item-2 { animation-delay: 0.4s; }
-.item-3 { animation-delay: 0.6s; }
-.item-4 { animation-delay: 0.8s; }
-
 
 .button:hover {
-    background-color: rgba(255, 255, 255, 0.4); 
-    transform: translateX(-5px); 
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); 
-}
-
-.button:active {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateX(0); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: none; /* Убираем сдвиг на мобильных */
 }
 
 /* ======================================= */
-/* 5. СТИЛИЗАЦИЯ МУЗЫКАЛЬНОГО ПРОИГРЫВАТЕЛЯ */
+/* 3. СТИЛИ ПЛЕЕРА (АДАПТИВНЫЙ)            */
 /* ======================================= */
 
-/* Контейнер плеера (включает все кнопки и название) */
 #music-player-container {
     position: fixed;
-    left: 30px; 
-    bottom: 30px;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    width: 100%; /* Полная ширина на мобильных */
     z-index: 10;
     
     display: flex;
     align-items: center;
-    gap: 10px; /* Промежуток между элементами плеера */
-    
-    /* Анимация выдвижения снизу слева */
-    animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
-    animation-delay: 1.2s; 
-    opacity: 0; 
+    justify-content: space-around; /* Распределяем кнопки */
+    gap: 10px; 
     
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.2); /* Небольшой фон для всего плеера */
-    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.8); 
+    border-radius: 0; 
+
+    animation: fadeIn 0.8s ease-in-out forwards; 
+    animation-delay: 1.2s; 
+    opacity: 0; 
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Стили для кнопок переключения (Prev/Next) */
+#music-player-btn {
+    width: 45px; height: 45px;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 2px solid white; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, box-shadow 0.2s; 
+}
+
 .track-control-btn {
     padding: 8px; 
     width: 30px; 
@@ -167,134 +179,108 @@ body {
     border-radius: 5px; 
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
     transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-.track-control-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    /* Убрана анимация transform: scale */
-}
-
-
-/* Стили для кнопки Play/Pause */
-#music-player-btn {
-    padding: 15px; 
-    width: 50px; 
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.05); 
-    border: 2px solid white; 
-    color: white; 
-    border-radius: 5px; 
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s, box-shadow 0.2s; /* Убрана анимация transform */
-}
-
-#music-player-btn i {
-    font-size: 20px;
-}
-
-#music-player-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2); 
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    /* Убрана анимация transform: scale(1.1); */
-}
-
-#music-player-btn.playing {
-    background-color: #2ecc71; 
-    border-color: #2ecc71;
-    transform: none; 
-}
-
 #track-name {
+    flex-grow: 1; 
+    text-align: center;
+    font-size: 14px;
     color: white;
-    font-size: 16px;
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-
-/* ======================================= */
-/* 6. СТИЛИ ДЛЯ ИНФОРМАЦИОННОГО БЛОКА      */
-/* ======================================= */
-
-.info-frame {
-    width: 80%; 
-    max-width: 900px; 
-    background-color: rgba(20, 70, 20, 0.8); 
-    color: white;
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-    margin-top: 0; 
-    margin-bottom: 0;
-    box-sizing: border-box;
-}
-
-.header-line {
-    display: flex;
-    justify-content: space-between; 
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Добавляем разделитель для красоты */
-}
-
-.code-left {
-    /* ИСПРАВЛЕНИЕ: Гарантируем, что текст слева */
-    text-align: left; 
-    flex-grow: 0; 
-}
-
-.code-right {
-    /* ИСПРАВЛЕНИЕ: Гарантируем, что текст справа */
-    text-align: right;
-}
-
-.text-block p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    text-align: justify; 
-}
-
-.answer-right {
-    text-align: right !important; 
-    margin-bottom: 5px !important;
-}
-
-.loading-bar {
-    width: 100%;
-    height: 10px;
-    background-color: #38c172; 
-    margin: 25px 0;
-    border-radius: 5px;
+    /* Обрезка длинного названия трека на мобильных */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 150px; 
 }
 
 /* ======================================= */
-/* 7. ПОСЛЕДОВАТЕЛЬНАЯ АНИМАЦИЯ ТЕКСТА     */
+/* 4. МЕДИАЗАПРОС (ДЛЯ ПК/ПЛАНШЕТОВ > 768px)*/
 /* ======================================= */
+@media (min-width: 768px) {
+    
+    /* Восстанавливаем десктопное центрирование */
+    .content {
+        justify-content: center; 
+        padding: 30px;
+    }
 
-.fade-in-line {
-    opacity: 0;
-    animation: fadeIn 0.8s ease-in-out forwards; 
+    /* Восстанавливаем десктопный заголовок */
+    .main-title {
+        font-size: 60px;
+        margin-top: -100px; 
+        margin-bottom: 20px;
+    }
+
+    /* Восстанавливаем десктопные стили плашки */
+    .info-frame {
+        width: 80%; 
+        padding: 30px;
+        background-color: rgba(20, 70, 20, 0.8);
+    }
+    
+    .header-line {
+        font-size: 24px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .text-block p {
+        font-size: 16px;
+    }
+
+    /* Восстанавливаем боковое позиционирование кнопок */
+    .button-container {
+        position: absolute;
+        right: 30px; 
+        top: 50%; 
+        transform: translateY(-50%); 
+        width: auto;
+        gap: 20px;
+        padding: 25px;
+    }
+    
+    .button {
+        min-width: 180px; 
+        padding: 20px 40px; 
+        font-size: 20px; 
+    }
+    
+    .button:hover {
+        transform: translateX(-5px); 
+    }
+
+    /* Восстанавливаем позиционирование плеера в угол */
+    #music-player-container {
+        position: fixed;
+        left: 30px; 
+        right: auto;
+        bottom: 30px;
+        width: auto;
+        justify-content: flex-start;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.2); 
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    #music-player-btn {
+        width: 50px; height: 50px;
+    }
+
+    #track-name {
+        font-size: 16px;
+        max-width: none; 
+    }
+    
+    /* Восстановление анимаций текста для ПК */
+    .fade-in-line.item-1 { animation-delay: 1.5s; }
+    .fade-in-line.item-2 { animation-delay: 2.2s; } 
+    .fade-in-line.item-3 { animation-delay: 4.0s; }
+    .fade-in-line.item-4 { animation-delay: 4.5s; }
+    .fade-in-line.item-5 { animation-delay: 5.0s; }
+    .fade-in-line.item-6 { animation-delay: 5.5s; }
+    .fade-in-line.item-7 { animation-delay: 6.0s; }
 }
-
-/* Устанавливаем задержки */
-.fade-in-line.item-1 { animation-delay: 1.5s; }
-.fade-in-line.item-2 { animation-delay: 2.2s; } 
-.fade-in-line.item-3 { animation-delay: 4.0s; }
-.fade-in-line.item-4 { animation-delay: 4.5s; }
-.fade-in-line.item-5 { animation-delay: 5.0s; }
-.fade-in-line.item-6 { animation-delay: 5.5s; }
-.fade-in-line.item-7 { animation-delay: 6.0s; }
