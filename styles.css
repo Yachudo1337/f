@@ -53,6 +53,7 @@ body {
     display: flex;
     flex-direction: column; 
     align-items: center; 
+    /* Вертикальное центрирование */
     justify-content: center; 
     padding: 30px; 
     box-sizing: border-box; 
@@ -65,6 +66,7 @@ body {
     font-size: 60px; 
     font-style: italic; 
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+    /* Сдвигаем вверх, как на скриншоте */
     margin-bottom: 20px; 
     margin-top: -100px; 
     text-align: center; 
@@ -112,6 +114,7 @@ body {
     opacity: 0; 
 }
 
+/* Задержка для ПОСЛЕДОВАТЕЛЬНОГО выезда 4-х кнопок */
 .item-1 { animation-delay: 0.2s; }
 .item-2 { animation-delay: 0.4s; }
 .item-3 { animation-delay: 0.6s; }
@@ -134,8 +137,8 @@ body {
 /* 5. СТИЛИЗАЦИЯ МУЗЫКАЛЬНОГО ПРОИГРЫВАТЕЛЯ */
 /* ======================================= */
 
-/* Контейнер для всех кнопок плеера */
-#music-player-full-container {
+/* Новый контейнер для кнопки и названия */
+#music-player-container {
     position: fixed;
     left: 30px; 
     bottom: 30px;
@@ -143,36 +146,19 @@ body {
     
     display: flex;
     align-items: center;
+    gap: 15px; /* Промежуток между кнопкой и текстом */
     
-    /* Начальный размер (только для кнопки Play) */
-    width: 80px; /* Ширина, чтобы центрировать Play/Pause */
-    height: 80px; 
-    
-    background-color: transparent; 
-    border-radius: 5px; 
-    box-sizing: border-box;
-    
-    /* Анимация разворачивания */
-    transition: width 0.3s ease-in-out;
-    
+    /* Анимация выдвижения снизу слева */
     animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     animation-delay: 1.2s; 
     opacity: 0; /* Анимация делает его видимым */
 }
 
-/* Плеер разворачивается при наведении */
-#music-player-full-container:hover {
-    width: 250px; /* Увеличиваем ширину, чтобы вместить все три кнопки */
-    padding: 0 10px; /* Небольшой отступ */
-    background-color: rgba(0, 0, 0, 0.4); /* Полупрозрачный фон при наведении */
-}
-
-/* Стили для всех кнопок внутри контейнера (Play/Pause, Next, Prev) */
-#music-player-btn, .track-control-btn {
+#music-player-btn {
     padding: 15px; 
     width: 50px; 
     height: 50px;
-    background-color: rgba(255, 255, 255, 0.05); /* Очень высокая прозрачность */
+    background-color: rgba(255, 255, 255, 0.05); 
     border: 2px solid white; 
     color: white; 
     border-radius: 5px; 
@@ -182,32 +168,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    transition: all 0.2s, opacity 0.3s;
+    transition: background-color 0.2s, box-shadow 0.2s; /* Убрана анимация transform */
 }
 
-/* Стили для кнопок переключения треков (Скрыты по умолчанию) */
-.track-control-btn {
-    opacity: 0;
-    pointer-events: none; /* Не реагируют на клики, пока невидимы */
-    margin: 0 5px;
-    width: 40px; /* Чуть меньше */
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.1); 
-    border: 1px solid white;
+#music-player-btn i {
+    font-size: 20px;
 }
 
-/* Кнопки переключения треков становятся видимыми при наведении на контейнер */
-#music-player-full-container:hover .track-control-btn {
-    opacity: 1;
-    pointer-events: auto; /* Включаем реакцию на клики */
-}
-
-/* Эффект наведения на кнопки */
-#music-player-btn:hover, .track-control-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3); 
+#music-player-btn:hover {
+    /* Убрано transform: scale(1.1); */
+    background-color: rgba(255, 255, 255, 0.2); 
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    transform: scale(1.05);
 }
 
 #music-player-btn.playing {
@@ -215,6 +186,17 @@ body {
     border-color: #2ecc71;
     transform: none; 
 }
+
+#track-name {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    /* Анимация названия, чтобы появилось вместе с кнопкой */
+    animation: fadeIn 0.8s ease-in-out forwards; 
+    animation-delay: 1.5s; 
+}
+
 
 /* ======================================= */
 /* 6. СТИЛИ ДЛЯ ИНФОРМАЦИОННОГО БЛОКА      */
@@ -228,7 +210,7 @@ body {
     padding: 30px;
     border-radius: 5px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-    margin-top: 0; 
+    margin-top: 0; /* Корректируем отступы для лучшего центрирования */
     margin-bottom: 0;
     box-sizing: border-box;
 }
@@ -243,14 +225,15 @@ body {
 }
 
 .code-left {
-    flex-grow: 1; 
-    text-align: center;
-    transform: translateX(50%); 
+    /* !!! ИСПРАВЛЕНИЕ НАЛОЖЕНИЯ !!! */
+    text-align: left; 
+    flex-grow: 0; /* Убираем растяжение */
+    width: auto;
 }
 
 .code-right {
     text-align: right;
-    width: 150px; 
+    width: auto; /* Убираем фиксированную ширину, чтобы избежать проблем */
 }
 
 .text-block p {
