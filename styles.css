@@ -18,25 +18,26 @@
     }
 }
 
-@keyframes slideInFromBottomLeft {
+/* Новая анимация для видео */
+@keyframes slideInVideoFromLeft {
     from {
-        transform: translate(-100%, 100%); 
+        transform: translateX(-100%); 
         opacity: 0;
     }
     to {
-        transform: translate(0, 0);
+        transform: translateX(0);
         opacity: 1;
     }
 }
 
 /* ======================================= */
-/* 2. ОСНОВНЫЕ СТИЛИ (MOBILE-FIRST)        */
+/* 2. ОСНОВНЫЕ СТИЛИ (MOBILE-FIRST - ДЛЯ ТЕЛЕФОНОВ) */
 /* ======================================= */
 
 body {
     margin: 0; 
     font-family: Arial, sans-serif;
-    overflow-x: hidden; /* Запрещаем горизонтальный скролл */
+    overflow-x: hidden; 
 }
 
 #background-gif {
@@ -47,15 +48,15 @@ body {
     z-index: -1; 
 }
 
-/* На мобильных: элементы идут сверху вниз и занимают всю ширину */
+/* На телефонах: элементы идут сверху вниз */
 .content {
     width: 100%; 
     min-height: 100vh; 
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    justify-content: flex-start; /* Начинаем сверху */
-    padding: 20px 10px 100px 10px; /* Отступ снизу для плеера */
+    justify-content: flex-start;
+    padding: 20px 10px 100px 10px; /* Отступ снизу для плеера (учитывая видео) */
     box-sizing: border-box; 
     position: relative; 
     z-index: 1; 
@@ -63,11 +64,11 @@ body {
 
 .main-title {
     color: white; 
-    font-size: 40px; 
+    font-size: 32px; 
     font-style: italic; 
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
     margin-bottom: 20px; 
-    margin-top: 30px; 
+    margin-top: 20px; 
     text-align: center; 
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
@@ -76,7 +77,6 @@ body {
 /* Зеленая плашка */
 .info-frame {
     width: 95%; 
-    max-width: 900px; 
     background-color: rgba(20, 70, 20, 0.9);
     color: white;
     padding: 15px;
@@ -89,7 +89,7 @@ body {
 .header-line {
     display: flex;
     justify-content: space-between; 
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     padding-bottom: 5px;
@@ -97,55 +97,74 @@ body {
 }
 
 .code-left, .code-right {
-    white-space: nowrap; /* Важно: предотвращает перенос строки */
+    white-space: nowrap; 
 }
 
 .text-block p {
-    font-size: 14px;
+    font-size: 12px; 
     line-height: 1.4;
     margin-bottom: 10px;
 }
 
-/* Контейнер кнопок: статический на мобильных */
+/* Контейнер кнопок: статический и шире на мобильных */
 .button-container {
     position: static; 
     transform: none; 
     width: 95%; 
     gap: 10px; 
-    padding: 15px; 
+    padding: 10px; 
     background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 10px;
+    margin-top: 15px; 
 }
 
 .button {
-    padding: 15px 20px; 
-    font-size: 16px; 
+    padding: 10px 15px; 
+    font-size: 14px; 
     min-width: 100%; 
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .button:hover {
-    transform: none; /* Убираем сдвиг на мобильных */
+    transform: none; 
 }
 
 /* ======================================= */
-/* 3. СТИЛИ ПЛЕЕРА (АДАПТИВНЫЙ)            */
+/* 3. СТИЛИ ВИДЕО И ПЛЕЕРА (АДАПТИВНЫЙ)    */
 /* ======================================= */
+
+#lain-video {
+    position: fixed;
+    left: 10px; /* Отступ от края */
+    bottom: 90px; /* НАД плеером */
+    width: 120px; /* МАЛЕНЬКОЕ */
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 11; /* Выше плеера */
+    object-fit: cover;
+    display: none; /* Скрыто по умолчанию на мобильных, пока не появится нужда */
+
+    /* Анимация: выдвижение из лева */
+    animation: slideInVideoFromLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+    animation-delay: 1.5s; 
+    opacity: 0;
+}
 
 #music-player-container {
     position: fixed;
     left: 0; 
     right: 0;
     bottom: 0;
-    width: 100%; /* Полная ширина на мобильных */
+    width: 100%; 
     z-index: 10;
     
     display: flex;
     align-items: center;
-    justify-content: space-around; /* Распределяем кнопки */
-    gap: 10px; 
+    justify-content: space-around; 
+    gap: 5px; 
     
-    padding: 10px;
+    padding: 8px 10px; 
     background-color: rgba(0, 0, 0, 0.8); 
     border-radius: 0; 
 
@@ -155,66 +174,76 @@ body {
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
 }
 
-#music-player-btn {
-    width: 45px; height: 45px;
-    background-color: rgba(255, 255, 255, 0.05); 
-    border: 2px solid white; 
+/* Стили для кнопок плеера (общие) */
+#music-player-btn, .track-control-btn {
     color: white; 
     border-radius: 5px; 
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: background-color 0.2s, box-shadow 0.2s; 
 }
 
+#music-player-btn {
+    width: 35px; height: 35px;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 1px solid white; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); 
+}
+
+#music-player-btn i {
+    font-size: 16px; 
+}
+
 .track-control-btn {
-    padding: 8px; 
-    width: 30px; 
-    height: 30px;
+    padding: 5px; 
+    width: 25px; height: 25px; 
     background-color: rgba(255, 255, 255, 0.1); 
     border: 1px solid white; 
-    color: white; 
-    border-radius: 5px; 
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
+.track-control-btn i {
+    font-size: 12px; 
+}
+
 
 #track-name {
     flex-grow: 1; 
     text-align: center;
-    font-size: 14px;
+    font-size: 12px; 
     color: white;
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    /* Обрезка длинного названия трека на мобильных */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
-    max-width: 150px; 
+    max-width: 120px; 
 }
 
 /* ======================================= */
-/* 4. МЕДИАЗАПРОС (ДЛЯ ПК/ПЛАНШЕТОВ > 768px)*/
+/* 4. СТИЛИ ДЛЯ ПК (ВОССТАНОВЛЕНИЕ ОРИГИНАЛА)*/
 /* ======================================= */
 @media (min-width: 768px) {
     
-    /* Восстанавливаем десктопное центрирование */
-    .content {
-        justify-content: center; 
-        padding: 30px;
+    /* ПК: видео отображается */
+    #lain-video {
+        display: block; 
+        left: 30px; 
+        bottom: 100px; /* Над десктопным плеером */
+        width: 180px; /* Больше на ПК */
+        animation-delay: 1.5s; 
     }
 
-    /* Восстанавливаем десктопный заголовок */
+    /* Десктопный заголовок */
     .main-title {
         font-size: 60px;
         margin-top: -100px; 
         margin-bottom: 20px;
     }
 
-    /* Восстанавливаем десктопные стили плашки */
+    /* Десктопная плашка */
     .info-frame {
         width: 80%; 
         padding: 30px;
@@ -224,14 +253,14 @@ body {
     .header-line {
         font-size: 24px;
         margin-bottom: 20px;
-        padding-bottom: 10px;
     }
-
+    
     .text-block p {
         font-size: 16px;
+        line-height: 1.5;
     }
 
-    /* Восстанавливаем боковое позиционирование кнопок */
+    /* Десктопное позиционирование кнопок */
     .button-container {
         position: absolute;
         right: 30px; 
@@ -240,6 +269,7 @@ body {
         width: auto;
         gap: 20px;
         padding: 25px;
+        margin-top: 0;
     }
     
     .button {
@@ -252,7 +282,7 @@ body {
         transform: translateX(-5px); 
     }
 
-    /* Восстанавливаем позиционирование плеера в угол */
+    /* Десктопный плеер в углу */
     #music-player-container {
         position: fixed;
         left: 30px; 
@@ -264,10 +294,25 @@ body {
         background-color: rgba(0, 0, 0, 0.2); 
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        gap: 10px;
     }
     
     #music-player-btn {
         width: 50px; height: 50px;
+        border: 2px solid white;
+    }
+
+    #music-player-btn i {
+        font-size: 20px;
+    }
+    
+    .track-control-btn {
+        width: 30px; height: 30px;
+        padding: 8px;
+    }
+
+    .track-control-btn i {
+        font-size: 16px;
     }
 
     #track-name {
@@ -275,7 +320,7 @@ body {
         max-width: none; 
     }
     
-    /* Восстановление анимаций текста для ПК */
+    /* Восстановление анимаций текста */
     .fade-in-line.item-1 { animation-delay: 1.5s; }
     .fade-in-line.item-2 { animation-delay: 2.2s; } 
     .fade-in-line.item-3 { animation-delay: 4.0s; }
