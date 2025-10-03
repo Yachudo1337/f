@@ -31,7 +31,7 @@
                 
                 <p class="fade-in-line item-4">Очень прошу, пропишите мне что-нибудь. Синий, красный тунал, малиновый, как помада, секанал.</p>
                 
-                <p class="answer-right fade-in-line item-5">— Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться.</p>
+                <p class="fade-in-line item-5">— Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться.</p>
                 
                 <p class="answer-right fade-in-line item-6">— Эй, послушайте, я же мучаюсь.</p>
                 
@@ -62,7 +62,7 @@
         const playlist = [
             'Fuckman.mp3', 
             'lovely.mp3',  
-            'Безумное зло.mp3'
+            'Безумное зло.mp3' 
         ];
         let currentTrackIndex = 0;
         let isPlaying = false;
@@ -73,12 +73,11 @@
         const trackNameElement = document.getElementById('track-name');
         const prevBtn = document.getElementById('prev-track-btn');
         const nextBtn = document.getElementById('next-track-btn');
-        
-        // Автоматическое воспроизведение видео (может быть заблокировано браузером, если без muted)
         const lainVideo = document.getElementById('lain-video');
+        
+        // Запуск видео
         lainVideo.play().catch(error => {
             console.error('Не удалось воспроизвести видео автоматически:', error);
-            // Можно добавить кнопку "Play Video" если автовоспроизведение не сработало
         });
 
 
@@ -108,7 +107,7 @@
                 isPlaying = true;
             }).catch(error => {
                 console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
-                alert(`Ошибка: Не удалось воспроизвести музыку. Файл "${playlist[currentTrackIndex]}" не найден.`);
+                // На ПК может потребоваться клик пользователя для первого воспроизведения
                 isPlaying = false;
                 playerBtn.classList.remove('playing');
                 playerIcon.classList.remove('fa-pause');
@@ -144,15 +143,12 @@
             playAudio();
         }
         
-        // Автоматический переход
         audio.addEventListener('ended', nextTrack);
 
-        // Обработчики событий
         playerBtn.addEventListener('click', togglePlay);
         nextBtn.addEventListener('click', nextTrack);
         prevBtn.addEventListener('click', prevTrack);
 
-        // Загрузка первого трека при старте
         loadTrack(currentTrackIndex);
     </script>
     
