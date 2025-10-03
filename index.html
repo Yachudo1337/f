@@ -39,10 +39,10 @@
             </div>
             </div>
         <div class="button-container">
-            <a href="inf-adptr.html" class="button animated-item item-1">inf adptr</a>
-            <a href="phto-chrch.html" class="button animated-item item-2">phto chrch</a>
-            <a href="bludy-msic.html" class="button animated-item item-3">bludy msic</a>
-            <a href="silnt-flms.html" class="button animated-item item-4">silnt flms</a>
+            <a href="inf-adptr.html" class="button animated-item item-1">INF ADPTR</a>
+            <a href="phto-chrch.html" class="button animated-item item-2">PHTO CHRCH</a>
+            <a href="bludy-msic.html" class="button animated-item item-3">BLUDY MSIC</a>
+            <a href="silnt-flms.html" class="button animated-item item-4">SILNT FLMS</a>
         </div>
     </div>
     
@@ -62,7 +62,7 @@
         const playlist = [
             'Fuckman.mp3', 
             'lovely.mp3',  
-            'Безумное зло.mp3' 
+            'Безумное зло.mp3'
         ];
         let currentTrackIndex = 0;
         let isPlaying = false;
@@ -74,12 +74,11 @@
         const prevBtn = document.getElementById('prev-track-btn');
         const nextBtn = document.getElementById('next-track-btn');
         const lainVideo = document.getElementById('lain-video');
-        
-        // Запуск видео
+
+        // Запуск видео (потребует взаимодействия пользователя, если браузер блокирует)
         lainVideo.play().catch(error => {
             console.error('Не удалось воспроизвести видео автоматически:', error);
         });
-
 
         function formatTrackName(fileName) {
             let name = fileName.replace(/\.mp3/i, '');
@@ -107,7 +106,6 @@
                 isPlaying = true;
             }).catch(error => {
                 console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
-                // На ПК может потребоваться клик пользователя для первого воспроизведения
                 isPlaying = false;
                 playerBtn.classList.remove('playing');
                 playerIcon.classList.remove('fa-pause');
