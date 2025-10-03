@@ -41,7 +41,7 @@
 }
 
 /* ======================================= */
-/* 2. ОСНОВНОЙ КОНТЕНТ И ПОЗИЦИОНИРОВАНИЕ (ТОЛЬКО ПК) */
+/* 2. ОСНОВНОЙ КОНТЕНТ И ПОЗИЦИОНИРОВАНИЕ  */
 /* ======================================= */
 
 body {
@@ -59,7 +59,6 @@ body {
 }
 
 .content {
-    /* Центрируем контент по вертикали и горизонтали */
     width: 100%; height: 100vh;
     display: flex;
     flex-direction: column; 
@@ -77,19 +76,40 @@ body {
     font-style: italic; 
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
     margin-bottom: 20px; 
-    margin-top: -100px; /* Сдвиг вверх для центрирования плашки и заголовка */
+    margin-top: -100px; 
     text-align: center; 
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
 }
 
 /* ======================================= */
-/* 3. КОНТЕЙНЕР КНОПОК (СПРАВА) - ИСПРАВЛЕНО */
+/* 3. СТИЛИ ВИДЕО LAIN (НАД ПЛЕЕРОМ) - ИЗМЕНЕНО */
+/* ======================================= */
+
+#lain-video {
+    position: fixed;
+    left: 30px; 
+    bottom: 100px; 
+    /* Увеличение на ~20% */
+    width: 216px; 
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 11; 
+    object-fit: cover;
+    
+    animation: slideInVideoFromLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+    animation-delay: 1.5s; 
+    opacity: 0;
+}
+
+/* ======================================= */
+/* 4. КОНТЕЙНЕР КНОПОК (СПРАВА)             */
 /* ======================================= */
 
 .button-container {
     display: flex;
-    flex-direction: column; /* Кнопки друг под другом */
+    flex-direction: column; 
     gap: 20px; 
     padding: 25px; 
     background-color: rgba(0, 0, 0, 0.5); 
@@ -97,7 +117,7 @@ body {
     position: absolute;
     right: 30px; 
     top: 50%; 
-    transform: translateY(-50%); /* Точное вертикальное центрирование */
+    transform: translateY(-50%); 
     z-index: 2; 
 }
 
@@ -128,126 +148,20 @@ body {
 .item-3 { animation-delay: 0.6s; }
 .item-4 { animation-delay: 0.8s; }
 
-
 .button:hover {
     background-color: rgba(255, 255, 255, 0.4); 
     transform: translateX(-5px); 
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); 
 }
 
-
 /* ======================================= */
-/* 4. СТИЛИ ВИДЕО LAIN (НАД ПЛЕЕРОМ) - ВОССТАНОВЛЕНО */
-/* ======================================= */
-
-#lain-video {
-    position: fixed;
-    left: 30px; 
-    bottom: 100px; /* Над плеером (30px + 70px) */
-    width: 180px; 
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    z-index: 11; 
-    object-fit: cover;
-    
-    /* Анимация: выдвижение из лева */
-    animation: slideInVideoFromLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
-    animation-delay: 1.5s; 
-    opacity: 0;
-}
-
-/* ======================================= */
-/* 5. СТИЛИ МУЗЫКАЛЬНОГО ПЛЕЕРА (СЛЕВА СНИЗУ) - ВОССТАНОВЛЕНО */
-/* ======================================= */
-
-#music-player-container {
-    position: fixed;
-    left: 30px; 
-    bottom: 30px; /* Отступ от края */
-    z-index: 10;
-    
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.2); 
-    border-radius: 10px;
-
-    animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
-    animation-delay: 1.2s; 
-    opacity: 0; 
-}
-
-.track-control-btn {
-    padding: 8px; 
-    width: 30px; 
-    height: 30px;
-    background-color: rgba(255, 255, 255, 0.1); 
-    border: 1px solid white; 
-    color: white; 
-    border-radius: 5px; 
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.track-control-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-#music-player-btn {
-    padding: 15px; 
-    width: 50px; 
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.05); 
-    border: 2px solid white; 
-    color: white; 
-    border-radius: 5px; 
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s; 
-}
-
-#music-player-btn i {
-    font-size: 20px;
-}
-
-#music-player-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2); 
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    transform: scale(1.1);
-}
-
-#music-player-btn.playing {
-    background-color: #2ecc71; 
-    border-color: #2ecc71;
-    transform: none; 
-}
-
-#track-name {
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-
-/* ======================================= */
-/* 6. СТИЛИ ДЛЯ ИНФОРМАЦИОННОГО БЛОКА      */
+/* 5. СТИЛИ ДЛЯ ИНФОРМАЦИОННОГО БЛОКА - ИЗМЕНЕНО */
 /* ======================================= */
 
 .info-frame {
     width: 80%; 
-    max-width: 900px; 
+    /* СУЖЕНИЕ ПЛАШКИ */
+    max-width: 750px; 
     background-color: rgba(20, 70, 20, 0.8); 
     color: white;
     padding: 30px;
@@ -256,9 +170,6 @@ body {
     margin-top: 0; 
     margin-bottom: 0;
     box-sizing: border-box;
-    /* Устанавливаем максимальную ширину контента, чтобы кнопки не накладывались */
-    /* Вычитаем ширину блока кнопок (примерно 250px) + отступы (30px*2) */
-    max-width: calc(100% - 310px); 
 }
 
 .header-line {
@@ -292,14 +203,79 @@ body {
 }
 
 /* ======================================= */
-/* 7. ПОСЛЕДОВАТЕЛЬНАЯ АНИМАЦИЯ ТЕКСТА     */
+/* 6. СТИЛИ МУЗЫКАЛЬНОГО ПЛЕЕРА (СЛЕВА СНИЗУ)*/
 /* ======================================= */
 
+#music-player-container {
+    position: fixed;
+    left: 30px; 
+    bottom: 30px;
+    z-index: 10;
+    
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2); 
+    border-radius: 10px;
+
+    animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+    animation-delay: 1.2s; 
+    opacity: 0; 
+}
+
+.track-control-btn {
+    padding: 8px; 
+    width: 30px; 
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    border: 1px solid white; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#music-player-btn {
+    padding: 15px; 
+    width: 50px; 
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 2px solid white; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s; 
+}
+
+#music-player-btn i {
+    font-size: 20px;
+}
+
+#track-name {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* ======================================= */
+/* 7. ПОСЛЕДОВАТЕЛЬНАЯ АНИМАЦИЯ ТЕКСТА     */
+/* ======================================= */
+/* Анимации текста остаются без изменений */
 .fade-in-line {
     opacity: 0;
     animation: fadeIn 0.8s ease-in-out forwards; 
 }
-
 .fade-in-line.item-1 { animation-delay: 1.5s; }
 .fade-in-line.item-2 { animation-delay: 2.2s; } 
 .fade-in-line.item-3 { animation-delay: 4.0s; }
