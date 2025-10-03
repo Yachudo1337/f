@@ -18,6 +18,17 @@
     }
 }
 
+@keyframes slideInFromBottomLeft {
+    from {
+        transform: translate(-100%, 100%); 
+        opacity: 0;
+    }
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
 /* Новая анимация для видео */
 @keyframes slideInVideoFromLeft {
     from {
@@ -31,13 +42,14 @@
 }
 
 /* ======================================= */
-/* 2. ОСНОВНЫЕ СТИЛИ (MOBILE-FIRST - ДЛЯ ТЕЛЕФОНОВ) */
+/* 2. ОСНОВНОЙ КОНТЕНТ И ПОЗИЦИОНИРОВАНИЕ (ТОЛЬКО ПК) */
 /* ======================================= */
 
 body {
     margin: 0; 
     font-family: Arial, sans-serif;
-    overflow-x: hidden; 
+    /* Удерживаем overflow: hidden для красивого фона, как на скриншоте */
+    overflow: hidden; 
 }
 
 #background-gif {
@@ -48,15 +60,14 @@ body {
     z-index: -1; 
 }
 
-/* На телефонах: элементы идут сверху вниз */
 .content {
-    width: 100%; 
-    min-height: 100vh; 
+    /* Центрируем контент по вертикали и горизонтали */
+    width: 100%; height: 100vh;
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    justify-content: flex-start;
-    padding: 20px 10px 100px 10px; /* Отступ снизу для плеера (учитывая видео) */
+    justify-content: center; 
+    padding: 30px; 
     box-sizing: border-box; 
     position: relative; 
     z-index: 1; 
@@ -64,268 +75,244 @@ body {
 
 .main-title {
     color: white; 
-    font-size: 32px; 
+    font-size: 60px; 
     font-style: italic; 
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+    /* Сдвиг вверх для центрирования плашки и заголовка */
     margin-bottom: 20px; 
-    margin-top: 20px; 
+    margin-top: -100px; 
     text-align: center; 
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
 }
 
-/* Зеленая плашка */
-.info-frame {
-    width: 95%; 
-    background-color: rgba(20, 70, 20, 0.9);
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
+/* ======================================= */
+/* 3. КОНТЕЙНЕР КНОПОК (СПРАВА)             */
+/* ======================================= */
 
-.header-line {
-    display: flex;
-    justify-content: space-between; 
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.code-left, .code-right {
-    white-space: nowrap; 
-}
-
-.text-block p {
-    font-size: 12px; 
-    line-height: 1.4;
-    margin-bottom: 10px;
-}
-
-/* Контейнер кнопок: статический и шире на мобильных */
 .button-container {
-    position: static; 
-    transform: none; 
-    width: 95%; 
-    gap: 10px; 
-    padding: 10px; 
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+    padding: 25px; 
     background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 10px;
-    margin-top: 15px; 
+    position: absolute;
+    right: 30px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    z-index: 2; /* Над плашкой */
 }
 
 .button {
-    padding: 10px 15px; 
-    font-size: 14px; 
-    min-width: 100%; 
-    transition: background-color 0.3s, box-shadow 0.3s;
+    display: block; 
+    padding: 20px 40px; 
+    font-size: 20px; 
+    min-width: 180px; 
+    text-align: center; 
+    background-color: rgba(255, 255, 255, 0.2); 
+    border: 2px solid white; 
+    color: white; 
+    text-decoration: none; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); 
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
 }
+
+.animated-item {
+    animation: slideInFromRight 0.8s ease-out forwards;
+    opacity: 0; 
+}
+
+.item-1 { animation-delay: 0.2s; }
+.item-2 { animation-delay: 0.4s; }
+.item-3 { animation-delay: 0.6s; }
+.item-4 { animation-delay: 0.8s; }
+
 
 .button:hover {
-    transform: none; 
+    background-color: rgba(255, 255, 255, 0.4); 
+    transform: translateX(-5px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); 
 }
 
+
 /* ======================================= */
-/* 3. СТИЛИ ВИДЕО И ПЛЕЕРА (АДАПТИВНЫЙ)    */
+/* 4. СТИЛИ ВИДЕО ЛЕЙН (НАД ПЛЕЕРОМ)        */
 /* ======================================= */
 
 #lain-video {
     position: fixed;
-    left: 10px; /* Отступ от края */
-    bottom: 90px; /* НАД плеером */
-    width: 120px; /* МАЛЕНЬКОЕ */
+    left: 30px; /* Отступ слева как у плеера */
+    bottom: 100px; /* ПОДНИМАЕМ над плеером */
+    width: 180px; 
     height: auto;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    z-index: 11; /* Выше плеера */
+    z-index: 11; 
     object-fit: cover;
-    display: none; /* Скрыто по умолчанию на мобильных, пока не появится нужда */
-
+    
     /* Анимация: выдвижение из лева */
     animation: slideInVideoFromLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     animation-delay: 1.5s; 
     opacity: 0;
 }
 
+/* ======================================= */
+/* 5. СТИЛИ МУЗЫКАЛЬНОГО ПЛЕЕРА (СЛЕВА СНИЗУ)*/
+/* ======================================= */
+
 #music-player-container {
     position: fixed;
-    left: 0; 
-    right: 0;
-    bottom: 0;
-    width: 100%; 
+    left: 30px; 
+    bottom: 30px;
     z-index: 10;
     
     display: flex;
     align-items: center;
-    justify-content: space-around; 
-    gap: 5px; 
+    gap: 10px; 
     
-    padding: 8px 10px; 
-    background-color: rgba(0, 0, 0, 0.8); 
-    border-radius: 0; 
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2); 
+    border-radius: 10px;
 
-    animation: fadeIn 0.8s ease-in-out forwards; 
+    animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     animation-delay: 1.2s; 
     opacity: 0; 
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
-}
-
-/* Стили для кнопок плеера (общие) */
-#music-player-btn, .track-control-btn {
-    color: white; 
-    border-radius: 5px; 
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s, box-shadow 0.2s; 
-}
-
-#music-player-btn {
-    width: 35px; height: 35px;
-    background-color: rgba(255, 255, 255, 0.05); 
-    border: 1px solid white; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); 
-}
-
-#music-player-btn i {
-    font-size: 16px; 
 }
 
 .track-control-btn {
-    padding: 5px; 
-    width: 25px; height: 25px; 
+    padding: 8px; 
+    width: 30px; 
+    height: 30px;
     background-color: rgba(255, 255, 255, 0.1); 
     border: 1px solid white; 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-.track-control-btn i {
-    font-size: 12px; 
+.track-control-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
+#music-player-btn {
+    padding: 15px; 
+    width: 50px; 
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 2px solid white; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s; 
+}
+
+#music-player-btn i {
+    font-size: 20px;
+}
+
+#music-player-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+}
+
+#music-player-btn.playing {
+    background-color: #2ecc71; 
+    border-color: #2ecc71;
+    transform: none; 
+}
 
 #track-name {
-    flex-grow: 1; 
-    text-align: center;
-    font-size: 12px; 
     color: white;
+    font-size: 16px;
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    max-width: 120px; 
+}
+
+
+/* ======================================= */
+/* 6. СТИЛИ ДЛЯ ИНФОРМАЦИОННОГО БЛОКА      */
+/* ======================================= */
+
+.info-frame {
+    width: 80%; 
+    max-width: 900px; 
+    background-color: rgba(20, 70, 20, 0.8); 
+    color: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    margin-top: 0; 
+    margin-bottom: 0;
+    box-sizing: border-box;
+}
+
+.header-line {
+    display: flex;
+    justify-content: space-between; 
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.code-left {
+    text-align: left; 
+    flex-grow: 0; 
+}
+
+.code-right {
+    text-align: right;
+}
+
+.text-block p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    text-align: justify; 
+}
+
+.answer-right {
+    text-align: right !important; 
+    margin-bottom: 5px !important;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #38c172; 
+    margin: 25px 0;
+    border-radius: 5px;
 }
 
 /* ======================================= */
-/* 4. СТИЛИ ДЛЯ ПК (ВОССТАНОВЛЕНИЕ ОРИГИНАЛА)*/
+/* 7. ПОСЛЕДОВАТЕЛЬНАЯ АНИМАЦИЯ ТЕКСТА     */
 /* ======================================= */
-@media (min-width: 768px) {
-    
-    /* ПК: видео отображается */
-    #lain-video {
-        display: block; 
-        left: 30px; 
-        bottom: 100px; /* Над десктопным плеером */
-        width: 180px; /* Больше на ПК */
-        animation-delay: 1.5s; 
-    }
 
-    /* Десктопный заголовок */
-    .main-title {
-        font-size: 60px;
-        margin-top: -100px; 
-        margin-bottom: 20px;
-    }
-
-    /* Десктопная плашка */
-    .info-frame {
-        width: 80%; 
-        padding: 30px;
-        background-color: rgba(20, 70, 20, 0.8);
-    }
-    
-    .header-line {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
-    
-    .text-block p {
-        font-size: 16px;
-        line-height: 1.5;
-    }
-
-    /* Десктопное позиционирование кнопок */
-    .button-container {
-        position: absolute;
-        right: 30px; 
-        top: 50%; 
-        transform: translateY(-50%); 
-        width: auto;
-        gap: 20px;
-        padding: 25px;
-        margin-top: 0;
-    }
-    
-    .button {
-        min-width: 180px; 
-        padding: 20px 40px; 
-        font-size: 20px; 
-    }
-    
-    .button:hover {
-        transform: translateX(-5px); 
-    }
-
-    /* Десктопный плеер в углу */
-    #music-player-container {
-        position: fixed;
-        left: 30px; 
-        right: auto;
-        bottom: 30px;
-        width: auto;
-        justify-content: flex-start;
-        padding: 10px;
-        background-color: rgba(0, 0, 0, 0.2); 
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        gap: 10px;
-    }
-    
-    #music-player-btn {
-        width: 50px; height: 50px;
-        border: 2px solid white;
-    }
-
-    #music-player-btn i {
-        font-size: 20px;
-    }
-    
-    .track-control-btn {
-        width: 30px; height: 30px;
-        padding: 8px;
-    }
-
-    .track-control-btn i {
-        font-size: 16px;
-    }
-
-    #track-name {
-        font-size: 16px;
-        max-width: none; 
-    }
-    
-    /* Восстановление анимаций текста */
-    .fade-in-line.item-1 { animation-delay: 1.5s; }
-    .fade-in-line.item-2 { animation-delay: 2.2s; } 
-    .fade-in-line.item-3 { animation-delay: 4.0s; }
-    .fade-in-line.item-4 { animation-delay: 4.5s; }
-    .fade-in-line.item-5 { animation-delay: 5.0s; }
-    .fade-in-line.item-6 { animation-delay: 5.5s; }
-    .fade-in-line.item-7 { animation-delay: 6.0s; }
+.fade-in-line {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards; 
 }
+
+.fade-in-line.item-1 { animation-delay: 1.5s; }
+.fade-in-line.item-2 { animation-delay: 2.2s; } 
+.fade-in-line.item-3 { animation-delay: 4.0s; }
+.fade-in-line.item-4 { animation-delay: 4.5s; }
+.fade-in-line.item-5 { animation-delay: 5.0s; }
+.fade-in-line.item-6 { animation-delay: 5.5s; }
+.fade-in-line.item-7 { animation-delay: 6.0s; }
