@@ -118,7 +118,6 @@ body {
 .item-2 { animation-delay: 0.4s; }
 .item-3 { animation-delay: 0.6s; }
 .item-4 { animation-delay: 0.8s; }
-/* .item-5 - УДАЛЕН */
 
 
 .button:hover {
@@ -185,9 +184,8 @@ body {
 /* ======================================= */
 
 .info-frame {
-    width: 80%; /* Задаем ширину рамки */
-    max-width: 900px; /* Ограничиваем максимальную ширину */
-    /* Используем прозрачный фон, как на изображении (темно-зеленый/хаки) */
+    width: 80%; 
+    max-width: 900px; 
     background-color: rgba(20, 70, 20, 0.8); 
     color: white;
     padding: 30px;
@@ -196,21 +194,20 @@ body {
     margin-top: 20px; 
     margin-bottom: 20px;
     box-sizing: border-box;
+    /* Убираем глобальную анимацию, чтобы работал эффект последовательного появления текста */
 }
 
 .header-line {
     display: flex;
-    justify-content: space-between; /* Распределяем элементы по углам */
+    justify-content: space-between; 
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    /* Убираем нижнюю границу, чтобы блок выглядел как на скриншоте */
-    /* border-bottom: 1px solid rgba(255, 255, 255, 0.3); */
 }
 
-/* Это гарантирует, что C23H30N2O4 будет прижат к левому краю контейнера */
 .code-left {
+    /* Это гарантирует, что C23H30N2O4 будет прижат к левому краю */
     text-align: left; 
 }
 
@@ -222,10 +219,9 @@ body {
     font-size: 16px;
     line-height: 1.5;
     margin-bottom: 15px;
-    text-align: justify; /* Выравнивание текста по ширине */
+    text-align: justify; 
 }
 
-/* Стиль для двух последних строк, выровненных по правому краю */
 .answer-right {
     text-align: right !important; 
     margin-bottom: 5px !important;
@@ -235,8 +231,27 @@ body {
 .loading-bar {
     width: 100%;
     height: 10px;
-    /* Яркий зеленый цвет, как на скриншоте */
     background-color: #38c172; 
     margin: 25px 0;
     border-radius: 5px;
 }
+
+/* ======================================= */
+/* 7. ПОСЛЕДОВАТЕЛЬНАЯ АНИМАЦИЯ ТЕКСТА     */
+/* ======================================= */
+
+/* Базовый стиль для всех последовательно появляющихся элементов */
+.fade-in-line {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards; /* Немного ускорили анимацию для лучшего эффекта */
+}
+
+/* Установка задержек для каждого элемента */
+/* Задержка начинается после того, как helo w0rd (2s) и кнопки закончили анимацию */
+.fade-in-line.item-1 { animation-delay: 1.5s; }
+.fade-in-line.item-2 { animation-delay: 2.2s; } /* Длинный абзац */
+.fade-in-line.item-3 { animation-delay: 3.2s; } /* Полоса загрузки */
+.fade-in-line.item-4 { animation-delay: 3.7s; }
+.fade-in-line.item-5 { animation-delay: 4.2s; }
+.fade-in-line.item-6 { animation-delay: 4.7s; }
+.fade-in-line.item-7 { animation-delay: 5.2s; }
