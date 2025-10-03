@@ -29,7 +29,6 @@
     }
 }
 
-/* Новая анимация для видео */
 @keyframes slideInVideoFromLeft {
     from {
         transform: translateX(-100%); 
@@ -48,7 +47,6 @@
 body {
     margin: 0; 
     font-family: Arial, sans-serif;
-    /* Удерживаем overflow: hidden для красивого фона, как на скриншоте */
     overflow: hidden; 
 }
 
@@ -78,21 +76,20 @@ body {
     font-size: 60px; 
     font-style: italic; 
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
-    /* Сдвиг вверх для центрирования плашки и заголовка */
     margin-bottom: 20px; 
-    margin-top: -100px; 
+    margin-top: -100px; /* Сдвиг вверх для центрирования плашки и заголовка */
     text-align: center; 
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
 }
 
 /* ======================================= */
-/* 3. КОНТЕЙНЕР КНОПОК (СПРАВА)             */
+/* 3. КОНТЕЙНЕР КНОПОК (СПРАВА) - ИСПРАВЛЕНО */
 /* ======================================= */
 
 .button-container {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column; /* Кнопки друг под другом */
     gap: 20px; 
     padding: 25px; 
     background-color: rgba(0, 0, 0, 0.5); 
@@ -100,8 +97,8 @@ body {
     position: absolute;
     right: 30px; 
     top: 50%; 
-    transform: translateY(-50%); 
-    z-index: 2; /* Над плашкой */
+    transform: translateY(-50%); /* Точное вертикальное центрирование */
+    z-index: 2; 
 }
 
 .button {
@@ -140,13 +137,13 @@ body {
 
 
 /* ======================================= */
-/* 4. СТИЛИ ВИДЕО ЛЕЙН (НАД ПЛЕЕРОМ)        */
+/* 4. СТИЛИ ВИДЕО LAIN (НАД ПЛЕЕРОМ) - ВОССТАНОВЛЕНО */
 /* ======================================= */
 
 #lain-video {
     position: fixed;
-    left: 30px; /* Отступ слева как у плеера */
-    bottom: 100px; /* ПОДНИМАЕМ над плеером */
+    left: 30px; 
+    bottom: 100px; /* Над плеером (30px + 70px) */
     width: 180px; 
     height: auto;
     border-radius: 5px;
@@ -161,13 +158,13 @@ body {
 }
 
 /* ======================================= */
-/* 5. СТИЛИ МУЗЫКАЛЬНОГО ПЛЕЕРА (СЛЕВА СНИЗУ)*/
+/* 5. СТИЛИ МУЗЫКАЛЬНОГО ПЛЕЕРА (СЛЕВА СНИЗУ) - ВОССТАНОВЛЕНО */
 /* ======================================= */
 
 #music-player-container {
     position: fixed;
     left: 30px; 
-    bottom: 30px;
+    bottom: 30px; /* Отступ от края */
     z-index: 10;
     
     display: flex;
@@ -259,6 +256,9 @@ body {
     margin-top: 0; 
     margin-bottom: 0;
     box-sizing: border-box;
+    /* Устанавливаем максимальную ширину контента, чтобы кнопки не накладывались */
+    /* Вычитаем ширину блока кнопок (примерно 250px) + отступы (30px*2) */
+    max-width: calc(100% - 310px); 
 }
 
 .header-line {
@@ -269,15 +269,6 @@ body {
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.code-left {
-    text-align: left; 
-    flex-grow: 0; 
-}
-
-.code-right {
-    text-align: right;
 }
 
 .text-block p {
