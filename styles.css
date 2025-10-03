@@ -1,117 +1,89 @@
-/* ======================================= */
-/* 1. ГЛОБАЛЬНЫЕ СТИЛИ И ФОН (GIF)        */
-/* ======================================= */
-
-body {
-    /* Удаляем стандартные отступы */
-    margin: 0; 
-    font-family: Arial, sans-serif;
-    /* Запрещаем прокрутку */
-    overflow: hidden; 
-}
-
-/* Стиль для фонового GIF, чтобы он был на весь экран */
-#background-gif {
-    /* Фиксируем изображение на фоне */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Масштабируем, чтобы покрыть весь экран, сохраняя пропорции */
-    object-fit: cover; 
-    z-index: -1; 
-}
+/* ... (Все предыдущие стили для фона, заголовка, позиционирования и проигрывателя остаются прежними) ... */
 
 /* ======================================= */
 /* 2. АНИМАЦИИ (KEYFRAMES)                 */
 /* ======================================= */
 
-/* Анимация проявления (Fade-In) для заголовка */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-/* Анимация выезда кнопок справа */
 @keyframes slideInFromRight {
     from {
-        /* Начальное состояние: за пределами экрана справа */
         transform: translateX(150%);
         opacity: 0;
     }
     to {
-        /* Конечное состояние: на своем месте */
         transform: translateX(0);
         opacity: 1;
     }
 }
 
-/* Анимация выезда проигрывателя снизу слева */
 @keyframes slideInFromBottomLeft {
     from {
-        /* Начальная позиция: за пределами экрана снизу и слева */
         transform: translate(-100%, 100%); 
         opacity: 0;
     }
     to {
-        /* Конечная позиция: на месте */
         transform: translate(0, 0);
         opacity: 1;
     }
 }
 
 /* ======================================= */
-/* 3. ПОЗИЦИОНИРОВАНИЕ КОНТЕНТА            */
+/* 3. ОСНОВНОЙ КОНТЕНТ И ПОЗИЦИОНИРОВАНИЕ  */
 /* ======================================= */
 
+body {
+    margin: 0; 
+    font-family: Arial, sans-serif;
+    overflow: hidden; 
+}
+
+#background-gif {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; 
+    z-index: -1; 
+}
+
 .content {
-    width: 100%;
-    height: 100vh;
-    /* Полупрозрачный слой поверх GIF для лучшей читаемости */
-    background-color: rgba(0, 0, 0, 0.1); 
-    
-    /* Flexbox для расположения: сверху вниз и по центру */
+    width: 100%; height: 100vh;
+    background-color: transparent; 
     display: flex;
     flex-direction: column; 
     align-items: center; 
     justify-content: flex-start; 
-    
     padding: 30px; 
     box-sizing: border-box; 
     position: relative; 
     z-index: 1; 
 }
 
-/* --- Стили для надписи "helo w0rd" --- */
 .main-title {
     color: white; 
     font-size: 60px; 
     font-style: italic; 
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
     margin-bottom: 50px; 
     margin-top: 50px; 
     text-align: center; 
-    
-    /* 2 секунды проявления */
     animation: fadeIn 2s ease-in-out forwards; 
     opacity: 0; 
 }
 
-/* --- Контейнер для кнопок: прижат к правому краю, вертикально центрирован --- */
 .button-container {
     display: flex;
     flex-direction: column; 
     gap: 20px; 
-    
     padding: 25px; 
-    background-color: rgba(0, 0, 0, 0.6); 
+    background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 10px;
-    
     position: absolute;
     right: 30px; 
     top: 50%; 
-    /* Вертикальное центрирование */
     transform: translateY(-50%); 
 }
 
@@ -120,13 +92,11 @@ body {
 /* ======================================= */
 
 .button {
-    /* Стили для КРУПНЫХ кнопок */
     display: block; 
     padding: 20px 40px; 
     font-size: 20px; 
     min-width: 180px; 
     text-align: center; 
-    
     background-color: rgba(255, 255, 255, 0.2); 
     border: 2px solid white; 
     color: white; 
@@ -138,7 +108,6 @@ body {
     transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
 }
 
-/* Применение анимации выезда */
 .animated-item {
     animation: slideInFromRight 0.8s ease-out forwards;
     opacity: 0; 
@@ -149,9 +118,9 @@ body {
 .item-2 { animation-delay: 0.4s; }
 .item-3 { animation-delay: 0.6s; }
 .item-4 { animation-delay: 0.8s; }
+/* .item-5 - УДАЛЕН */
 
 
-/* Эффекты при наведении */
 .button:hover {
     background-color: rgba(255, 255, 255, 0.4); 
     transform: translateX(-5px); 
@@ -169,20 +138,19 @@ body {
 /* ======================================= */
 
 #music-player-btn {
-    /* Позиция: Слева снизу */
     position: fixed;
-    left: 30px; 
+    left: 30px; /* Слева снизу */
     bottom: 30px;
     z-index: 10;
     
-    /* Стилизация: Прозрачный КВАДРАТ */
+    /* Стилизация: Прозрачный круг */
     padding: 15px; 
     width: 50px; 
     height: 50px;
     background-color: rgba(255, 255, 255, 0.1); 
     border: 2px solid white; 
     color: white; 
-    border-radius: 8px; /* Квадрат с небольшим скруглением */
+    border-radius: 50%; 
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     
@@ -190,7 +158,7 @@ body {
     justify-content: center;
     align-items: center;
     
-    /* Применяем анимацию выезда снизу слева */
+    /* Анимация выдвижения снизу слева */
     animation: slideInFromBottomLeft 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     animation-delay: 1.2s; 
 }
@@ -199,7 +167,6 @@ body {
     font-size: 20px;
 }
 
-/* Эффект при наведении */
 #music-player-btn:hover {
     background-color: rgba(255, 255, 255, 0.3); 
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
@@ -207,9 +174,69 @@ body {
     transition: all 0.2s;
 }
 
-/* Стиль при активном проигрывании */
 #music-player-btn.playing {
     background-color: #2ecc71; 
     border-color: #2ecc71;
     transform: none; 
+}
+
+/* ======================================= */
+/* 6. СТИЛИ ДЛЯ ИНФОРМАЦИОННОГО БЛОКА      */
+/* ======================================= */
+
+.info-frame {
+    width: 80%; /* Задаем ширину рамки */
+    max-width: 900px; /* Ограничиваем максимальную ширину */
+    /* Используем прозрачный фон, как на изображении (темно-зеленый/хаки) */
+    background-color: rgba(20, 70, 20, 0.8); 
+    color: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.header-line {
+    display: flex;
+    justify-content: space-between; /* Распределяем элементы по углам */
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    /* Убираем нижнюю границу, чтобы блок выглядел как на скриншоте */
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.3); */
+}
+
+/* Это гарантирует, что C23H30N2O4 будет прижат к левому краю контейнера */
+.code-left {
+    text-align: left; 
+}
+
+.code-right {
+    text-align: right;
+}
+
+.text-block p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    text-align: justify; /* Выравнивание текста по ширине */
+}
+
+/* Стиль для двух последних строк, выровненных по правому краю */
+.answer-right {
+    text-align: right !important; 
+    margin-bottom: 5px !important;
+}
+
+/* Стиль для зеленой полосы-загрузки */
+.loading-bar {
+    width: 100%;
+    height: 10px;
+    /* Яркий зеленый цвет, как на скриншоте */
+    background-color: #38c172; 
+    margin: 25px 0;
+    border-radius: 5px;
 }
