@@ -3,26 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Информационный Адаптер (inf-adptr)</title>
-    
-    <link rel="stylesheet" href="styleADPTR.css"> 
+    <title>inf adptr</title>
+    <link rel="stylesheet" href="styleADPTR.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Ваш заголовок</h1>
-        <p>На этой странице установлен фоновый рисунок из вашей ссылки.</p>
-    </header>
 
-    <main>
-        <section style="background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 8px;">
-            <h2>Содержимое страницы</h2>
-            <p>Чтобы текст был виден на фоне, этому блоку добавлена полупрозрачная белая подложка.</p>
-            <p>Вы можете удалить или изменить стиль `background-color` в теге `section`, если он вам не нужен.</p>
-        </section>
-    </main>
+    <img src="https://i.pinimg.com/originals/bf/e5/dc/bfe5dc175abc7bb51f1b7ffc2ee994ec.gif" alt="Фоновый GIF" id="background-gif">
 
-    <footer>
-        <p>&copy; 2025 inf-adptr. Все права защищены.</p>
-    </footer>
+    <div class="content">
+        <div class="info-layout bg-gray">
+            <div class="nickname-line">
+                <span class="anim-line">C23H30N204</span>
+                <span class="anim-line">ya_chydo1000-7</span>
+            </div>
+
+
+
+            <div class="bio-text">
+                <p class="anim-line">Ваня 18y.o</p>
+                <p class="anim-line">my channels:</p>
+                <p class="anim-line">└ <a href="https://t.me/myrecognise" target="_blank">@myrecognise</a>  ← | main channel |</p>
+                <p class="anim-line">└ <a href="https://t.me/destructiveportfolio" target="_blank">@cringe hobby</a> ← | blender |</p>
+            </div>
+
+
+        </div>
+        <div class="nav-container-under">
+            <a href="index.html" class="back-btn">_RETURN_TO_MAIN</a>
+            <a href="phto-chrch.html" class="back-btn">_PHTO_CHRCH</a>
+            <a href="bludy-msic.html" class="back-btn">_BLUDY_MSIC</a>
+            <a href="silnt-flms.html" class="back-btn">_SILNT_FLMS</a>
+        </div>
+    </div>
+
+    <video id="lain-video" src="lain.mp4" loop muted autoplay playsinline></video>
+
+    <div id="music-player-container">
+        <button id="prev-track-btn" class="track-control-btn"><i class="fas fa-backward"></i></button>
+        <button id="music-player-btn"><i class="fas fa-play" id="player-icon"></i></button>
+        <button id="next-track-btn" class="track-control-btn"><i class="fas fa-forward"></i></button>
+        <span id="track-name"></span>
+    </div>
+
+    <div class="vertical-volume-panel">
+        <i class="volume-icon"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+
+    <audio id="my-audio" src="" loop></audio>
+
+    <audio id="my-audio" src="" loop></audio>
+
+    <script src="JavaScript.js"></script>
 </body>
 </html>

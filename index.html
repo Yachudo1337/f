@@ -4,48 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>helo ethernet</title>
-    
-    <link rel="stylesheet" href="styles.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styleADPTR.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
 
     <img src="https://i.pinimg.com/originals/2a/3b/cb/2a3bcbcbe4e14c1cf24ef307c10c1fb9.gif" alt="Фоновый GIF" id="background-gif">
 
     <div class="content">
-        
-        <h1 class="main-title">helo w0rd</h1>
-        
-        <div class="info-frame">
-            <div class="header-line">
-                <span class="code-left">C23H30N2O4</span>
-                <span class="code-right">YA_CHYDO 1000-7</span>
+        <h1 class="main-title-inside anim-text">helo w0rd</h1>
+        <div class="info-layout bg-green">
+
+
+            <div class="main-info-block">
+                <div class="info-frame">
+                    <div class="nickname-line">
+                        <span class="anim-line">C23H30N204</span>
+                        <span class="anim-line">ya_chydo1000-7</span>
+                    </div>
+
+                    <div class="bio-text">
+                        <div class="anim-line">Пойми меня. Прими конструктивное решение. Ты нашёл это, как поступишь ты?</div>
+                        <div class="anim-line">— Знаете ли... Я бы не стал обращаться с этим к кому ни попадая. Ведь человек, написавший это, опасен...</div>
+
+                        <div class="anim-line">
+                            <div class="loading-bar-animated"></div>
+                        </div>
+
+                        <div class="anim-line">Очень прошу, пропишите мне что-нибудь. Синий, красный тунал, малиновый, как помада, секанал.</div>
+                        <div class="anim-line">— Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться..</div>
+                        <div class="anim-line">— Эй, послушайте, я же мучаюсь.</div>
+                        <div class="anim-line">— Вы мучаетесь?</div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="text-block">
-                <p class="fade-in-line item-1">Пойми меня. Прими конструктивное решение. Ты нашёл это, как поступишь ты?</p>
-                
-                <p class="fade-in-line item-2">— Знаете ли... Я бы не стал обращаться с этим к кому ни попадая. Ведь человек, написавший это, опасен. И этот тихий и приличный с виду псих может вдруг сорваться и он начнет метаться из офиса в офис, держа полуавтоматический карабин в руках и будет выпускать обойму за обоймой в своих коллег и сотрудников. Возможно, вы знакомы с ним годы, и он совсем, совсем рядом с вами</p>
-                
-                <div class="loading-bar fade-in-line item-3"></div>
-                
-                <p class="fade-in-line item-4">Очень прошу, пропишите мне что-нибудь. Синий, красный тунал, малиновый, как помада, секанал.</p>
-                
-                <p class="fade-in-line item-5">— Вам нужен здоровый естественный сон. Попейте валерьянки и постарайтесь побольше двигаться.</p>
-                
-                <p class="answer-right fade-in-line item-6">— Эй, послушайте, я же мучаюсь.</p>
-                
-                <p class="answer-right fade-in-line item-7">— Вы мучаетесь?</p>
-            </div>
-            </div>
-        <div class="button-container">
-            <a href="inf-adptr.html" class="button animated-item item-1">INF ADPTR</a>
-            <a href="phto-chrch.html" class="button animated-item item-2">PHTO CHRCH</a>
-            <a href="bludy-msic.html" class="button animated-item item-3">BLUDY MSIC</a>
-            <a href="silnt-flms.html" class="button animated-item item-4">SILNT FLMS</a>
+
+
+        </div>
+        <div class="nav-container-under">
+            <a href="inf-adptr.html" class="back-btn">_INF_ADPTR</a>
+            <a href="phto-chrch.html" class="back-btn">_PHTO_CHRCH</a>
+            <a href="bludy-msic.html" class="back-btn">_BLUDY_MSIC</a>
+            <a href="silnt-flms.html" class="back-btn">_SILNT_FLMS</a>
         </div>
     </div>
-    
+
     <video id="lain-video" src="lain.mp4" loop muted autoplay playsinline></video>
 
     <div id="music-player-container">
@@ -55,100 +58,15 @@
         <span id="track-name"></span>
     </div>
 
+    <div class="vertical-volume-panel">
+        <i class="volume-icon"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+
     <audio id="my-audio" src="" loop></audio>
 
-    <script>
-        // === ЛОГИКА ПЛЕЙЛИСТА ===
-        const playlist = [
-            'Fuckman.mp3', 
-            'lovely.mp3',  
-            'Безумное зло.mp3'
-        ];
-        let currentTrackIndex = 0;
-        let isPlaying = false;
-        
-        const playerBtn = document.getElementById('music-player-btn');
-        const playerIcon = document.getElementById('player-icon');
-        const audio = document.getElementById('my-audio');
-        const trackNameElement = document.getElementById('track-name');
-        const prevBtn = document.getElementById('prev-track-btn');
-        const nextBtn = document.getElementById('next-track-btn');
-        const lainVideo = document.getElementById('lain-video');
+    <audio id="my-audio" src="" loop></audio>
 
-        // Запуск видео (потребует взаимодействия пользователя, если браузер блокирует)
-        lainVideo.play().catch(error => {
-            console.error('Не удалось воспроизвести видео автоматически:', error);
-        });
-
-        function formatTrackName(fileName) {
-            let name = fileName.replace(/\.mp3/i, '');
-            try {
-                name = decodeURIComponent(name);
-            } catch (e) {}
-            return name;
-        }
-
-        function updateTrackName() {
-            trackNameElement.textContent = formatTrackName(playlist[currentTrackIndex]);
-        }
-
-        function loadTrack(index) {
-            audio.src = playlist[index];
-            audio.load();
-            updateTrackName();
-        }
-
-        function playAudio() {
-            audio.play().then(() => {
-                playerIcon.classList.remove('fa-play');
-                playerIcon.classList.add('fa-pause');
-                playerBtn.classList.add('playing');
-                isPlaying = true;
-            }).catch(error => {
-                console.error('Воспроизведение заблокировано или файл не найден:', audio.src, error);
-                isPlaying = false;
-                playerBtn.classList.remove('playing');
-                playerIcon.classList.remove('fa-pause');
-                playerIcon.classList.add('fa-play');
-            });
-        }
-
-        function pauseAudio() {
-            audio.pause();
-            playerIcon.classList.remove('fa-pause');
-            playerIcon.classList.add('fa-play');
-            playerBtn.classList.remove('playing');
-            isPlaying = false;
-        }
-
-        function togglePlay() {
-            if (isPlaying) {
-                pauseAudio();
-            } else {
-                playAudio();
-            }
-        }
-
-        function nextTrack() {
-            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playAudio();
-        }
-
-        function prevTrack() {
-            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playAudio();
-        }
-        
-        audio.addEventListener('ended', nextTrack);
-
-        playerBtn.addEventListener('click', togglePlay);
-        nextBtn.addEventListener('click', nextTrack);
-        prevBtn.addEventListener('click', prevTrack);
-
-        loadTrack(currentTrackIndex);
-    </script>
-    
+    <script src="JavaScript.js"></script>
 </body>
 </html>

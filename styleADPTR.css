@@ -1,50 +1,473 @@
-/*
- * Стили для всего тела документа
- * (файл: styleADPTR.css)
- */
+/* ======================================= */
+/* 1. АНИМАЦИИ                             */
+/* ======================================= */
+
+@keyframes textReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes barGrow {
+    from {
+        width: 0%;
+        opacity: 0;
+    }
+
+    to {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottomLeft {
+    from {
+        transform: translate(-100%, 100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+/* ОБНОВЛЕННАЯ АНИМАЦИЯ ДЛЯ ЛАЙН (СЛЕВА НАПРАВО) */
+@keyframes slideInVideoFromLeft {
+    from {
+        transform: translateX(-50px); /* Вылазит слева направо */
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ======================================= */
+/* 2. БАЗОВЫЕ НАСТРОЙКИ                    */
+/* ======================================= */
+
+* {
+    font-family: 'Courier New', Courier, monospace !important;
+    box-sizing: border-box;
+}
 
 body {
-    /* Устанавливаем изображение по вашей ссылке как фон */
-    background-image: url('https://i.pinimg.com/73x/82/61/a5/8261a5101c2cc2e250ca0bdd7bd20384.jpg');
-    
-    /* Опции для оптимального отображения фона */
-    
-    /* 1. Масштабировать изображение, чтобы оно покрывало весь экран */
-    background-size: cover;      
-    
-    /* 2. Фон не будет повторяться (плиточно) */
-    background-repeat: no-repeat; 
-    
-    /* 3. Фон останется неподвижным при прокрутке страницы */
-    background-attachment: fixed;  
-    
-    /* 4. Сброс стандартных браузерных отступов */
     margin: 0;
-    
-    /* 5. Обеспечение минимальной высоты, чтобы фон был виден, даже если контента мало */
-    min-height: 100vh;
-    
-    /* Дополнительные стили для лучшей читаемости контента */
-    font-family: Arial, sans-serif;
-    color: #333; /* Цвет текста */
+    overflow: hidden;
+    background: #000;
+    color: white;
 }
 
-/* Дополнительные стили для лучшей организации контента */
-header, main, footer {
-    padding: 20px;
-    max-width: 960px; /* Ограничение ширины контента */
-    margin: 0 auto; /* Центрирование контента */
+#background-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 
-header {
+.content {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.main-title-inside {
+    font-size: 50px;
+    font-style: italic;
+    margin-bottom: 20px;
     text-align: center;
-    color: #fff; /* Белый текст для заголовка, чтобы он выделялся на темном фоне */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Тень для лучшей видимости текста */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    animation: textReveal 0.8s forwards;
 }
 
-footer {
+/* ======================================= */
+/* 3. ИНФО-БЛОК                            */
+/* ======================================= */
+
+.info-layout {
+    width: 85%;
+    max-width: 900px;
+    padding: 35px;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+}
+
+.bg-green {
+    background: rgba(20, 70, 20, 0.6) !important;
+}
+
+.bg-gray {
+    background: rgba(40, 40, 40, 0.65) !important;
+}
+
+/* НИКНЕЙМЫ И БЕЛАЯ ЛИНИЯ */
+.nickname-line {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+}
+
+/* ПООЧЕРЕДНОЕ ПОЯВЛЕНИЕ СТРОК */
+.anim-line {
+    opacity: 0;
+    animation: textReveal 0.6s ease-out forwards;
+    margin-bottom: 8px;
+}
+
+    .anim-line:nth-child(1) {
+        animation-delay: 0.8s;
+    }
+
+    .anim-line:nth-child(2) {
+        animation-delay: 1.0s;
+    }
+
+    .anim-line:nth-child(3) {
+        animation-delay: 1.4s;
+    }
+
+    .anim-line:nth-child(4) {
+        animation-delay: 1.8s;
+    }
+
+    .anim-line:nth-child(5) {
+        animation-delay: 2.0s;
+    }
+    /* Место для полоски */
+    .anim-line:nth-child(6) {
+        animation-delay: 2.2s;
+    }
+
+    .anim-line:nth-child(7) {
+        animation-delay: 2.4s;
+    }
+
+    .anim-line:nth-child(8) {
+        animation-delay: 1.6s;
+    }
+
+/* ЗЕЛЕНАЯ СВЕТЯЩАЯСЯ ПОЛОСКА */
+.loading-bar-animated {
+    height: 6px;
+    background: #38c172;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #38c172, 0 0 5px #fff;
+    width: 0;
+    animation: barGrow 1s ease-out forwards;
+    animation-delay: inherit; /* Берет задержку от родителя .anim-line */
+}
+
+/* ======================================= */
+/* 4. КНОПКИ ПЕРЕХОДНИКИ (В РЯД)           */
+/* ======================================= */
+
+
+.bio-text a,
+.bio-text a:visited,
+.bio-text a:active {
+    color: #38c172 !important; /* Тот самый зеленый */
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    border-bottom: 1px solid transparent;
+}
+
+    .bio-text a:hover {
+        color: #fff !important; /* При наведении будет белым, как и другие элементы */
+        border-bottom: 1px solid #38c172;
+    }
+
+
+.nav-container-under {
+    width: 85%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px !important
+}
+
+.nav-btn-adptr {
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5) !important;
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+    .nav-btn-adptr:hover {
+        background: #fff;
+        color: #000 !important;
+        border-color: #fff;
+    }
+
+.back-btn {
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    font-size: 11px;
+}
+
+/* ======================================= */
+/* 5. ПЛЕЕР, ГРОМКОСТЬ И ЛЕЙН              */
+/* ======================================= */
+
+.track-control-btn i, #music-player-btn i, .volume-icon {
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+}
+
+#music-player-container {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: transparent !important;
+    border: none !important;
+    animation: slideInFromBottomLeft 0.8s forwards;
+    z-index: 10;
+}
+
+.track-control-btn, #music-player-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}
+
+    .track-control-btn:hover, #music-player-btn:hover {
+        background: white;
+        color: black;
+    }
+
+#music-player-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.track-control-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+}
+
+
+
+
+/* ЛЕЙН ВИДЕО */
+#lain-video {
+    position: fixed;
+    left: 30px;
+    bottom: 120px;
+    width: 235px;
+    border-radius: 4px;
+    z-index: 5;
+    opacity: 0;
+    animation: slideInVideoFromLeft 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes slideInVideoFromLeft {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+/* ======================================= */
+/* ГАЛЕРЕЯ PHTO_CHRCH */
+/* ======================================= */
+
+.gallery-wrapper {
+    max-height: 70vh; /* Ограничиваем высоту для скролла */
+    display: flex;
+    flex-direction: column;
+}
+
+.pins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-top: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: #38c172 transparent;
+}
+
+    /* Стилизация скроллбара для Chrome/Edge */
+    .pins-grid::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .pins-grid::-webkit-scrollbar-thumb {
+        background: #38c172;
+        border-radius: 2px;
+    }
+
+.pin-item {
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    filter: grayscale(0.3);
+}
+
+    .pin-item:hover {
+        filter: grayscale(0);
+        transform: translateY(-5px);
+        border-color: #38c172;
+        box-shadow: 0 5px 15px rgba(56, 193, 114, 0.3);
+    }
+/* Специальные настройки только для контейнера галереи */
+.info-layout.gallery-wrapper {
+    /* Прижимаем максимально вверх */
+    margin-top: -100px !important;
+    /* Растягиваем по ширине (98% чтобы оставить микро-зазоры по бокам) */
+    max-width: 1800px;
+    width: 98%;
+    /* Прозрачность фона (0.2 — очень прозрачно) */
+    background-color: rgba(10, 10, 10, 0.1) !important;
+    /* Эффект матового стекла (опционально, убери если лагает) */
+    backdrop-filter: blur(4px);
+    /* Высота: почти на весь экран */
+    height: 92vh !important;
+    /* Убираем лишние тени, если они мешают прозрачности */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Изменения ТОЛЬКО для страницы phto-chrch */
+.gallery-wrapper + .nav-container-under {
+    margin-top: 5px !important; /* Опускает кнопки ниже от блока */
+    padding-bottom: 50px; /* Добавляет отступ от нижнего края экрана */
+    display: flex;
+    gap: 10px; /* Можно раздвинуть кнопки между собой */
+    justify-content: center;
+}
+
+    /* Если хочешь, чтобы сами кнопки внутри выглядели иначе только тут */
+    .gallery-wrapper + .nav-container-under .back-btn {
+        padding: 5px 5px;
+    }
+
+
+/* ===== СЕТКА ФОТО (КОНФЕТКА) ===== */
+.pins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0px;
+    padding: 10px;
+    overflow-y: auto;
+    width: 25%;
+    flex-grow: 1;
+}
+
+/* Карточка */
+.pin-card {
+    overflow: hidden;
+    transition: 0.25s;
+}
+
+
+
+/* Картинка */
+.pin-item {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    filter: grayscale(0.4);
+    transition: 0.3s;
+}
+
+
+
+/* Подпись */
+.pin-caption {
+    padding: 8px;
+    font-size: 11px;
     text-align: center;
-    color: #ccc;
-    font-size: 0.8em;
-    padding: 10px 20px;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+}
+
+/* 2. Настройка самой карточки (задаем размер тут) */
+.pin-card {
+    /* Жёстко задаем размер карточки. Подбери цифру под себя */
+    width: 150px;
+    height: 200px; /* Высота чуть больше ширины, чтобы влез текст */
+    display: flex;
+    flex-direction: column; /* Картинка над текстом внутри карточки */
+    padding: 5px;
+    transition: all 0.3s ease;
+    overflow: hidden; /* Чтобы текст не вылезал */
+}
+
+    /* 3. Настройка картинки внутри карточки */
+    .pin-card .pin-item {
+        width: 100%; /* Занимает всю ширину карточки (150px) */
+        height: 140px; /* Фиксированная высота для фото */
+        object-fit: cover; /* Умное кадрирование, чтобы фото не сплющилось */
+        border-radius: 2px;
+    }
+
+/* 4. Настройка текста под фото */
+.pin-caption {
+    margin-top: 5px;
+    font-size: 10px; /* Маленький шрифт терминала */
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    text-align: center;
+    /* Если текст длинный, он обрежется троеточием */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

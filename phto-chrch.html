@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>phto chrch</title>
+    <link rel="stylesheet" href="styleADPTR.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <img src="https://i.pinimg.com/originals/79/1a/a8/791aa81ae9e3d75a5a485d10adcd5b72.gif" alt="Фоновый GIF" id="background-gif">
+
+    <div class="content">
+        <div class="info-layout bg-gray gallery-wrapper">
+            <div class="nickname-line">
+                <span class="anim-line">C23H30N204</span>
+                <span class="anim-line">ya_chydo1000-7</span>
+            </div>
+
+            <div id="pins-container" class="pins-grid">
+
+                <div class="pin-card">
+                    <img src="photo/zxc.jpg" class="pin-item">
+                    <div class="pin-caption">пока не знаю</div>
+                </div>
+
+                <div class="pin-card">
+                    <img src="photo/1.jpg" class="pin-item">
+                    <div class="pin-caption">что сюда выставлять</div>
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+
+        <div class="nav-container-under">
+            <a href="index.html" class="back-btn">_RETURN_TO_MAIN</a>
+            <a href="inf-adptr.html" class="back-btn">_INF_ADPTR</a>
+            <a href="bludy-msic.html" class="back-btn">_BLUDY_MSIC</a>
+            <a href="silnt-flms.html" class="back-btn">_SILNT_FLMS</a>
+        </div>
+    </div>
+
+
+
+    <div id="music-player-container">
+        <button id="prev-track-btn" class="track-control-btn"><i class="fas fa-backward"></i></button>
+        <button id="music-player-btn"><i class="fas fa-play" id="player-icon"></i></button>
+        <button id="next-track-btn" class="track-control-btn"><i class="fas fa-forward"></i></button>
+        <span id="track-name"></span>
+    </div>
+
+    <div class="vertical-volume-panel">
+        <i class="volume-icon"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+
+    <audio id="my-audio" src="" loop></audio>
+
+    <audio id="my-audio" src="" loop></audio>
+
+    <script src="JavaScript.js"></script>
+</body>
+</html>
