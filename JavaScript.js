@@ -52,7 +52,7 @@ function togglePlay() {
 }
 
 // Громкость
-audio.volume = 0.15;
+audio.volume = 0.30;
 volumeSlider.addEventListener('input', (e) => {
     audio.volume = e.target.value;
 });
